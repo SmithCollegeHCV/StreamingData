@@ -2,6 +2,7 @@ svg {
   font: 10px sans-serif;
 }
 
+.axis text { display: none; }
 
 .line1{
 	fill: none;

@@ -112,6 +112,7 @@ experimentr.stopMouseMovementRec = function(event){
 
   // Adds the data in `d` to the experiment data, and saves to server.
   experimentr.addData = function(d) {
+    console.log(d);
     merge(data, d);
     experimentr.save();
   }

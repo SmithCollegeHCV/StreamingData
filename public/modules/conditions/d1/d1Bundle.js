@@ -2,26 +2,47 @@
  
 var socket;
 exports.pageId; 
-
+var data = {};
+ 
 
 module.exports = {
 	test : function(){
 		console.log("General.js can be used here");
 	},
 	validate: function () {
-		experimentr.endTimer(className);
+		experimentr.endTimer(exports.pageId);
 		experimentr.release();
+	},pushBorder: function(){
+		d3.select(".border")
+		.transition()
+		.duration(500)
+		.attr("rx",70)
+		.attr("ry",70)
+		.transition()
+		.duration(500)
+		.attr("rx",20)
+		.attr("ry",20);
 	},
 	pressed:function(buttonTitle, type){
+		general.pushBorder();
 		var isPresent = general.checkForAnamoly();
-		console.log('is anomolyPresent' + isPresent); 
-
-		var timePressed = experimentr.now(className);
+		console.log(exports.pageId);
+		timePressed = experimentr.now(exports.pageId);
 		timestamp = new Date().getTime();
 		var postId = experimentr.postId();
-		console.log('post id in experiment', postId);
-		console.log('this is pageID', exports.pageId);
-		socket.emit('mouseClick',{interactionType: type, buttonTitle: buttonTitle, timePressed: timePressed, postId: postId, timestamp:timestamp, AnomalyPresent: isPresent, pageId:exports.pageId});
+		
+
+		data["interactionType"] = type;
+		data["buttonTitle"] = buttonTitle;
+		data["timePressed"] = timePressed;
+		data["postId"] = postId; 
+		data["timestamp"] = timestamp;
+		data["AnomalyPresent"] = isPresent;
+		data["pageId"] = exports.pageId;
+		experimentr.addData(data);
+		console.log(data);
+		
+		//socket.emit('mouseClick',{interactionType: type, buttonTitle: buttonTitle, timePressed: timePressed, postId: postId, timestamp:timestamp, AnomalyPresent: isPresent, pageId:exports.pageId});
 	},
 	checkKeyPressed: function(e) {
 		if (e.keyCode == "13" || e.keyCode == "32") {
@@ -41,7 +62,6 @@ module.exports = {
 		});
 
 		document.onmousemove = experimentr.sendMouseMovement;
-		experimentr.startTimer(className);
 	},
 	countdown: function( elementName, minutes, seconds ){
 		var element, endTime, hours, mins, msLeft, time;
@@ -57,9 +77,9 @@ module.exports = {
 			if ( msLeft < 1000 ) {
 				element.innerHTML = "countdown's over!";
 				Mousetrap.reset();
-				document.onmousemove = experimentr.stopMouseMovementRec;
+				// document.onmousemove = experimentr.stopMouseMovementRec;
 				general.pressed('next-button', "button");
-				socket.emit('disconnect');
+				// socket.emit('disconnect');
 			} else {
 				time = new Date( msLeft );
 				hours = time.getUTCHours();
@@ -78,17 +98,6 @@ module.exports = {
 		allNoise= allPoints.map(function(a) {return a.noise;});
 		console.log('noise function',allNoise);
 		return allNoise.includes("T");
-	},
-	pushBorder: function(){
-		d3.select(".border")
-		.transition()
-		.duration(500)
-		.attr("rx",70)
-		.attr("ry",70)
-		.transition()
-		.duration(500)
-		.attr("rx",20)
-		.attr("ry",20);
 	}
 	
 };
@@ -121,7 +130,7 @@ var y3 = d3.scale.linear()
 .range([height, height*2/3]);
 
 module.exports = {
-	createGraphViewer:function(){
+	createGraphViewer:function(className){
 		general.test();
 
 		d3.select("#"+className)
@@ -190,7 +199,7 @@ module.exports = {
 
 
 	}, 
-	addGraph:function (){
+	addGraph:function (duration, dataPath1, dataPath2, dataPath3){
 
 
 		var q = d3.queue();
@@ -302,21 +311,43 @@ component = require("../conditionComponents");
 
 init = function(){
 	console.log('d1.js loaded');
-	general.connectSockets();
-	general.test();
-
-	var pageId = 'd1Spd1';
-	general.setPageVars(pageId);
+	//general.connectSockets();
 
 	window.addEventListener("keydown", general.checkKeyPressed, false);
+	var currentPage = d3.select("#module").selectAll("div")[0][1].getAttribute("id");
+	var slice = currentPage.slice(-1);
+	console.log("slice", slice);
 
-	component.createGraphViewer();
-	component.addGraph();
+	if(slice == 1){
+		d3.json("modules/conditions/d1/spd1/d1Vars1.json", function(error, data){
+			console.log(data.vars.className);
+			experimentr.startTimer(data.vars.className);
+			general.setPageVars(data.vars.className);
+			component.createGraphViewer(data.vars.className);
+	    	component.addGraph(data.vars.duration,data.vars.dataPath1, data.vars.dataPath2, data.vars.dataPath3);
+		})
+	}else if(slice == 2){
+		d3.json("modules/conditions/d1/spd2/d1Vars2.json", function(error, data){
+			console.log(data.vars.className);
+			experimentr.startTimer(data.vars.className);
+			general.setPageVars(data.vars.className);
+			component.createGraphViewer(data.vars.className);
+	    	component.addGraph(data.vars.duration,data.vars.dataPath1, data.vars.dataPath2, data.vars.dataPath3);
+		})
+
+ 	}else{
+ 			d3.json("modules/conditions/d1/spd3/d1Vars3.json", function(error, data){
+			console.log(data.vars.className);
+			experimentr.startTimer(data.vars.className);
+			general.setPageVars(data.vars.className);
+			component.createGraphViewer(data.vars.className);
+	    	component.addGraph(data.vars.duration,data.vars.dataPath1, data.vars.dataPath2, data.vars.dataPath3);
+		})
+	}
 
 	general.countdown( "countdown", 5, 0 );
 	
 }();
-
 
 
 },{"../General":1,"../conditionComponents":2}]},{},[3]);

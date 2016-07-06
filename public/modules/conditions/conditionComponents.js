@@ -25,7 +25,7 @@ var y3 = d3.scale.linear()
 .range([height, height*2/3]);
 
 module.exports = {
-	createGraphViewer:function(){
+	createGraphViewer:function(className){
 		general.test();
 
 		d3.select("#"+className)
@@ -94,7 +94,7 @@ module.exports = {
 
 
 	}, 
-	addGraph:function (){
+	addGraph:function (duration, dataPath1, dataPath2, dataPath3){
 
 
 		var q = d3.queue();

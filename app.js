@@ -103,13 +103,13 @@ var server = http.createServer(app).listen(port, function (err) {
 server.listen(socketPort)
 
 io.listen(server).on('connection', function (socket) {
+  console.log("connection established");
   socket.on('mouseMove', function (msg) {
-    
     mouseLocation.push({'timestamp': msg.timestamp, 'X': msg.mouseX, 'Y': msg.mouseY})
   });
 
   socket.on('disconnect', function(){
-    console.log('disconnected');
+    console.log(' connection disconnected');
   })
 
   socket.on('mouseClick', function(msg){

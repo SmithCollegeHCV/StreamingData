@@ -1,0 +1,11 @@
+{
+	"vars": {
+		"className": "d1Spd3",
+		"dataPath1": "data/fast1.tsv",
+		"dataPath2": "data/fast2.tsv",
+		"dataPath3": "data/fast3.tsv",
+		"duration": "14"
+	}
+}
+
+
