@@ -113,7 +113,7 @@ module.exports = {
 		.attr('name','researchButton')
 		.on('click',function(){
 			general.pressed(d3.select(this).attr('id') , "button");
-			console.log(' research button pressed'+ d3.select(this).attr('id'));
+			// console.log(' research button pressed'+ d3.select(this).attr('id'));
 		});
 	},
 	/** Imports data files and adds lines to the graph container 
@@ -298,7 +298,7 @@ createCopyViewer:function(className){
 *@function addBrush
 */
 addBrush:function(){
-	console.log("add Brush called")
+	// console.log("add Brush called")
 	svg2.append("g")
 	.attr("class","brush")
 	.call(brush)
@@ -314,10 +314,10 @@ brushed:function(){
 	var extent = brush.extent();
 	var min = Math.round(extent[0]);
 	var max = Math.round(extent[1]);
-	console.log("min"+ min+ "max" + max);
+	// console.log("min"+ min+ "max" + max);
 	if (d3.select(".copy3")[0][0] != null){
 		selectedPoints = lines.noise1.slice(min,max).concat(lines.noise2.slice(min,max)).concat(lines.noise3.slice(min,max));
-		console.log('in create components: selected Points = ',selectedPoints);
+		// console.log('in create components: selected Points = ',selectedPoints);
 	}
 },
 

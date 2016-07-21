@@ -43,6 +43,7 @@ init = function(){
 	};
 
 	general.countdown( "countdown", 5, 0 );
+
 	
 }();
 

@@ -32,10 +32,10 @@ module.exports = {
 	*/
 	validate: function () {
 		experimentr.setPageType(exports.pageId);
-		console.log('exports page id' + exports.pageId)
+		//console.log('exports page id' + exports.pageId)
 		data.mouseAction = interactionGroup;
-		console.log(interactionGroup)
-		console.log('data on merge' + data)
+		// console.log(interactionGroup)
+		// console.log('data on merge' + data)
 		experimentr.merge(data);
 		experimentr.endTimer( exports.pageId);
 		experimentr.release();
@@ -91,7 +91,7 @@ module.exports = {
 	checkKeyPressed: function(e) {
 		if (e.keyCode == "13" || e.keyCode == "32") {
 			general.pressed(e.keyCode, "key");
-			console.log('key pressed')
+			//console.log('key pressed')
 		}
 	},
 	/** Sets the page ID in this module
@@ -101,7 +101,7 @@ module.exports = {
 	*/
 	setPageVars: function(pageId){ 
 		exports.pageId=pageId;
-		console.log('pageId are set', exports.pageId);
+		//console.log('pageId are set', exports.pageId);
 	},
 	/** Connects websockets to record user mouse movements
 	*@memberof generalModule
@@ -110,7 +110,7 @@ module.exports = {
 	connectSockets: function(){
 		socket = io.connect();
 		socket.on('connect',function() {
-			console.log('Client has connected to the server!');
+			//console.log('Client has connected to the server!');
 		});
 
 		document.onmousemove = experimentr.sendMouseMovement;
@@ -132,7 +132,9 @@ module.exports = {
 		
 		function updateTimer()
 		{
+
 			msLeft = endTime - (+new Date);
+			
 			if ( msLeft < 1000 ) {
 				element.innerHTML = "countdown's over!";
 				Mousetrap.reset();
@@ -148,6 +150,7 @@ module.exports = {
 				time = new Date( msLeft );
 				hours = time.getUTCHours();
 				mins = time.getUTCMinutes();
+				console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
 				element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
 				setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
 			}
@@ -168,11 +171,10 @@ module.exports = {
 			lines = new general.getPoints();
 		}
 		allNoise= d3.select(".svg2")[0][0] == null ? lines.noise : selectedPoints;
-		console.log('selected points from general = '+selectedPoints)
-		console.log('noise function',allNoise);
+		if(allNoise){
 		return allNoise.includes("T");
-		console.log('noise function',allNoise);
-		return allNoise.includes("T");
+		}
+		
 	},
 	/** Clears brush component and saves all selected data
 	*@memberof generalModule
@@ -181,14 +183,14 @@ module.exports = {
 	feedBack:function(buttonTitle, type){
 		var interaction = {}; 
 		var isPresent = general.checkForAnamoly();
-		console.log("is Anomoly present?", isPresent);
-		console.log('pressed page id', exports.pageId);
+		// console.log("is Anomoly present?", isPresent);
+		// console.log('pressed page id', exports.pageId);
 		timePressed = experimentr.now(exports.pageId);
 		timestamp = new Date().getTime();
 		var postId = experimentr.postId();
 
 		
-		console.log("button title", buttonTitle)
+		// console.log("button title", buttonTitle)
 		interaction.interactionType = type;
 		interaction. buttonTitle = buttonTitle;
 		interaction.timePressed = timePressed;
@@ -196,12 +198,12 @@ module.exports = {
 		interaction.timestamp = timestamp;
 		interaction.AnomalyPresent = isPresent;
 		interaction.pageId = exports.pageId;
-		console.log("interaction", interaction)
-		console.log("before push")
-		console.log(interactionGroup)
+		// console.log("interaction", interaction)
+		// console.log("before push")
+		// console.log(interactionGroup)
 		interactionGroup.push(interaction);
-		console.log("after push")
-		console.log(interactionGroup)
+		// console.log("after push")
+		// console.log(interactionGroup)
 
 	},
 
@@ -210,6 +212,7 @@ module.exports = {
 	*@function getPoints
 	*/
 	getPoints:function(){
+		try{
 		var line1 = d3.select(".line1").datum().map(function(a) {return [a.value, a.noise];});
 		var line2 = d3.select(".line2").datum().map(function(a) {return [a.value, a.noise];});
 		var line3 = d3.select(".line3").datum().map(function(a) {return [a.value, a.noise];});
@@ -220,6 +223,10 @@ module.exports = {
 		this.noise1 = line1.map(function(a){return a[1]});
 		this.noise2 = line2.map(function(a){return a[1]});
 		this.noise3 = line3.map(function(a){return a[1]});
+		}
+		catch(err) {
+			return 0
+		}
 	},
 
 	/*Appends the copy of the active graph to the analysis graph for the user
