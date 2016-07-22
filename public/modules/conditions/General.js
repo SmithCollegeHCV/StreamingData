@@ -172,11 +172,15 @@ module.exports = {
 		}
 		allNoise= d3.select(".svg2")[0][0] == null ? lines.noise : selectedPoints;
 		if(lines.anoms){
-			currentAnoms =  lines.anoms.filter(function(n){ return n != undefined }); 
-			console.log("currently anomoly" + currentAnoms)
+			
+			
 		}
 		if(allNoise){
-		return allNoise.includes("T");
+			if (allNoise.includes("T")){
+				currentAnoms =  lines.anoms.filter(function(n){ return n != 0 }); 
+				console.log("currently anomoly" + currentAnoms)
+			}
+			return allNoise.includes("T")
 		}
 		
 	},
@@ -219,11 +223,11 @@ module.exports = {
 		try{
 
 		var line1 = d3.select(".line1").datum().map(function(a) {return [a.value, a.noise, a.anomCode];});
-		console.log(line1)
+
 		var line2 = d3.select(".line2").datum().map(function(a) {return [a.value, a.noise, a.anomCode];});
-		console.log(line2)
+
 		var line3 = d3.select(".line3").datum().map(function(a) {return [a.value, a.noise, a.anomCode];});
-		console.log(line3)
+		
 
 		this.points1 = line1.map(function(a){return a[0]});
 		this.points2 = line2.map(function(a){return a[0]});
@@ -235,7 +239,6 @@ module.exports = {
 		this.noise3 = line3.map(function(a){return a[1]});
 
 		this.anoms = line1.map(function(a){return a[2]}).concat(line2.map(function(a){return a[2]})).concat(line3.map(function(a){return a[2]}));	
-		console.log('this anoms ',this.anoms)
 		}
 		catch(err) {
 			return 0
