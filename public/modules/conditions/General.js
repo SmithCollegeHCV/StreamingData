@@ -171,7 +171,10 @@ module.exports = {
 			lines = new general.getPoints();
 		}
 		allNoise= d3.select(".svg2")[0][0] == null ? lines.noise : selectedPoints;
-		currentAnoms =  lines.anoms.filter(function(n){ return n != undefined }); 
+		if(lines.anoms){
+			currentAnoms =  lines.anoms.filter(function(n){ return n != undefined }); 
+			console.log("currently anomoly" + currentAnoms)
+		}
 		if(allNoise){
 		return allNoise.includes("T");
 		}
@@ -232,6 +235,7 @@ module.exports = {
 		this.noise3 = line3.map(function(a){return a[1]});
 
 		this.anoms = line1.map(function(a){return a[2]}).concat(line2.map(function(a){return a[2]})).concat(line3.map(function(a){return a[2]}));	
+		console.log('this anoms ',this.anoms)
 		}
 		catch(err) {
 			return 0
