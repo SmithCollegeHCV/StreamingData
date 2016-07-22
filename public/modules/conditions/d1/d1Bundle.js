@@ -172,6 +172,7 @@ module.exports = {
 			lines = new general.getPoints();
 		}
 		allNoise= d3.select(".svg2")[0][0] == null ? lines.noise : selectedPoints;
+		currentAnoms =  lines.anoms.filter(function(n){ return n != undefined }); 
 		if(allNoise){
 		return allNoise.includes("T");
 		}
@@ -214,16 +215,24 @@ module.exports = {
 	*/
 	getPoints:function(){
 		try{
-		var line1 = d3.select(".line1").datum().map(function(a) {return [a.value, a.noise];});
-		var line2 = d3.select(".line2").datum().map(function(a) {return [a.value, a.noise];});
-		var line3 = d3.select(".line3").datum().map(function(a) {return [a.value, a.noise];});
+
+		var line1 = d3.select(".line1").datum().map(function(a) {return [a.value, a.noise, a.anomCode];});
+		console.log(line1)
+		var line2 = d3.select(".line2").datum().map(function(a) {return [a.value, a.noise, a.anomCode];});
+		console.log(line2)
+		var line3 = d3.select(".line3").datum().map(function(a) {return [a.value, a.noise, a.anomCode];});
+		console.log(line3)
+
 		this.points1 = line1.map(function(a){return a[0]});
 		this.points2 = line2.map(function(a){return a[0]});
 		this.points3 = line3.map(function(a){return a[0]});
 		this.noise = line1.map(function(a){return a[1]}).concat(line2.map(function(a){return a[1]}).concat(line3.map(function(a){return a[1]})));
+		
 		this.noise1 = line1.map(function(a){return a[1]});
 		this.noise2 = line2.map(function(a){return a[1]});
 		this.noise3 = line3.map(function(a){return a[1]});
+
+		this.anoms = line1.map(function(a){return a[2]}).concat(line2.map(function(a){return a[2]})).concat(line3.map(function(a){return a[2]}));	
 		}
 		catch(err) {
 			return 0
