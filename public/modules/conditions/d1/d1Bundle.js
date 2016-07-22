@@ -177,11 +177,13 @@ module.exports = {
 			
 		}
 		if(allNoise){
+			var currentAnoms=[]
 			if (allNoise.includes("T")){
 				currentAnoms =  lines.anoms.filter(function(n){ return n != 0 }); 
 				console.log("currently anomoly" + currentAnoms)
 			}
-			return allNoise.includes("T")
+			var areAnomsPresent = [allNoise.includes("T"), currentAnoms]
+			return areAnomsPresent
 		}
 		
 	},
