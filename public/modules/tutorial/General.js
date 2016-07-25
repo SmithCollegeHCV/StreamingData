@@ -1,83 +1,4 @@
-<link rel="stylesheet" type="text/css" href="css/Tutorial.css">
-<style>
-p{
-	font-family: verdana;
-	font-size: 20px;
-	text-align:center;
-}
-
-.content{
-	width:800;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.line{
-	fill: none;
-	stroke: black;
-	stroke-width: 2px;
-}
-svg:not(:root) {
-    overflow: scroll;
-}
-svg text{
-	text-anchor:middle;
-	font-family: verdana;
-	fill: black;
-	font-size:20px;
-}
-</style>
-
-<body>
-	<div id = "tutorial">
-	<p style = "text-align:center">
-		<img src = "logo-small.png" width = "150px"/>
-		<div class = "content">
-		</p>
-		<p style = "text-align:center">
-			Thank you for agreeing to participate in this research study.</p>
-			<p class = "instruction" style = "text-align:center">
-				During this experiment, you will be shown a series of patterns...
-			</p>
-			<p class = "instruction" id = "back-button" style = "color:#BBB; float:left;">
-				Press &#8592 key to go back
-			</p>
-
-			<p class = "instruction" id = "forward-button" style = "color:#BBB; float:right;">
-				Press &#x2192 key to continue
-			</p>
-		</div>
-		<script>
-
-
-		function validate() {
-
-			experimentr.endTimer('demo');
-			experimentr.release();
-
-		};
-
-
-		Mousetrap.bind('left', function(e, n) { checkKeyPressed(n); });
-		Mousetrap.bind('right',function(e, n) { checkKeyPressed(n); });
-
-		experimentr.hideNext();
-
-		var step = 0;
-
-		function checkKeyPressed(key) { 
-
-			if ((key == "right") && (step < 7)) {
-				step += 1;
-				update(step);
-			}
-			else if ((key == "left") && (step  > 0)){
-				step -= 1;
-				update(step);
-				d3.select()
-			}  
-		}
-
+		step = 0;
 		var n = 10;
 		var tduration = 200000;
 
@@ -113,10 +34,25 @@ svg text{
 		
 		d3.select(".content").attr("align","center");
 
-		update(step);
+function checkKeyPressed(key) { 
 
+			if ((key == "right") && (step < 7)) {
+				step += 1;
+				update(step);
+			}
+			else if ((key == "left") && (step  > 0)){
+				step -= 1;
+				update(step);
+				d3.select()
+			}  
+		}
+function validate() {
 
-		function update(i){
+			experimentr.endTimer('demo');
+			experimentr.release();
+
+		}
+function update(i){
 
 
 			svg.selectAll(".line")
@@ -145,7 +81,7 @@ svg text{
 			console.log(i);
 			switch(i){
 
-			default:
+			case 0||1:
 
 				var fileName = "data/file"+i+".tsv";
 				var modelName = "data"+i;
@@ -366,9 +302,11 @@ svg text{
 					.attr("y",400);
 
 				break;
-				
+			
 			case 6: 
-
+				console.log(pageID);
+				switch(pageID){
+				case 'tutorial1':
 				svg.append("text")
 					.text("Whenever you see an ANOMALY")
 					.attr("x",360)
@@ -408,9 +346,25 @@ svg text{
 					.text("you will receive an additional bonus of $0.25.")
 					.attr("x",360)
 					.attr("y",320);	
-
 				break;
-				
+				case 'tutorial2':
+				console.log("sdhfskdhkf");
+				svg.append("image")
+					.attr("xlink:href", "modules/tutorial/TwoViewer.png")
+					.attr("width", 720)
+					.attr("height", 400)
+					.attr("x",0)
+					.attr("y",0);
+				svg.append("text")
+					.text("Moving lines will be displayed")
+					.attr("x",360)
+					.attr("y",390);
+				svg.append("text")
+					.text("on the left part")
+					.attr("x",360)
+					.attr("y",430);
+				break;}
+			break;
 			case 7: 
 
 				d3.select("#container").attr("height", 150);
@@ -438,15 +392,14 @@ svg text{
 				
 				break;
 			
-		
-	}}
+				
+			
+	}
+
 
 		function type(d){
 			d.index = d.index;
 			d.value = d.value;
 			return d;
 		}
-
-		</script>
-	</div>
-	</body>
+}

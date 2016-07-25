@@ -63,5 +63,31 @@ svg {
 	fill:none;
 	stroke:black;
 	shape-rendering: crispEdges;
+}
 
+p{
+	font-family: verdana;
+	font-size: 20px;
+	text-align:center;
+}
+
+.content{
+	width:800;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.line{
+	fill: none;
+	stroke: black;
+	stroke-width: 2px;
+}
+svg:not(:root) {
+    overflow: scroll;
+}
+svg text{
+	text-anchor:middle;
+	font-family: verdana;
+	fill: black;
+	font-size:20px;
 }
