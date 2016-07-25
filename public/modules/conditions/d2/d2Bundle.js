@@ -151,7 +151,7 @@ module.exports = {
 				time = new Date( msLeft );
 				hours = time.getUTCHours();
 				mins = time.getUTCMinutes();
-				console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
+				// console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
 				element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
 				setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
 			}
@@ -180,7 +180,7 @@ module.exports = {
 			var currentAnoms=[]
 			if (allNoise.includes("T")){
 				currentAnoms =  lines.anoms.filter(function(n){ return n != 0 }); 
-				console.log("currently anomoly" + currentAnoms)
+				// console.log("currently anomoly" + currentAnoms)
 			}
 			var areAnomsPresent = [allNoise.includes("T"), currentAnoms]
 			return areAnomsPresent
