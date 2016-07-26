@@ -44,9 +44,10 @@ var tutorialPages = 0;
 
 var pageId = null;
 
+setPageID();
 
-function setPageID(pageId){
-	this.pageId = pageId;
+function setPageID(){
+	this.pageId = d3.select("#module").selectAll("div")[0][0].getAttribute('id')
 
 	if(pageId == "tutorial1"){
 		tutorialPages = tutorial1Pages;
@@ -83,27 +84,31 @@ function removePrevious(){
 }
 
 
-function keepInBounds (){
+function keepInBounds(step){
 	if (step < 0){
 		step = 0;
+		console.log('in less than ')
 	}
 
 	if (step > introPages + tutorialPages + exitPages){
-		step == introPages + tutorialPages + exitPages; 
+		step =introPages + tutorialPages + exitPages; 
+		console.log('in greater than')
 	}
+	return step
 }
 
-function checkKeyPressed(key) { 
+function checkKeyPressed(key) {
+
 	if (key == "right") {
 		step += 1;
 	}
 	else if (key == "left"){
 		step -= 1;
 	}
-
+	step =  keepInBounds(step)
 	removePrevious()
 	setArrowDirection(step)
-
+	console.log(step)
 	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
