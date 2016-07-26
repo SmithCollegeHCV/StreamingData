@@ -1,0 +1,9 @@
+{
+	"vars": {
+		"className": "d3Spd1",
+		"dataPath1": "data/slow1.tsv",
+		"dataPath2": "data/slow2.tsv",
+		"dataPath3": "data/slow3.tsv",
+		"duration": "83"
+	}
+}
