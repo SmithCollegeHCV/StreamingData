@@ -43,7 +43,7 @@ var tutorial3Pages = 3;
 var tutorialPages = 0;
 
 var pageId = null;
-
+var step = 0;
 setPageID();
 
 function setPageID(){
@@ -87,33 +87,36 @@ function removePrevious(){
 function keepInBounds(step){
 	if (step < 0){
 		step = 0;
-		console.log('in less than ')
 	}
 
 	if (step > introPages + tutorialPages + exitPages){
-		step =introPages + tutorialPages + exitPages; 
-		console.log('in greater than')
+		step = introPages + tutorialPages + exitPages; 
 	}
 	return step
 }
 
 function checkKeyPressed(key) {
-
 	if (key == "right") {
 		step += 1;
 	}
 	else if (key == "left"){
 		step -= 1;
 	}
+
 	step =  keepInBounds(step)
 	removePrevious()
 	setArrowDirection(step)
-	console.log(step)
+	console.log('step', step)
+
+	console.log('introPages + tutorialPages' , introPages + tutorialPages)
+	console.log('introPages', introPages)
+	console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
 	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
 		console.log('introduction')
-	}else if(step > introPages && step <= introPages + tutorialPages){
+	}else if(step > introPages - 1 && step <= introPages + tutorialPages){
+
 		if(pageId == 'tutorial1'){
 			tutorial1(step)
 			console.log('tutorial1')
@@ -373,7 +376,6 @@ function introduction(i){
 }
 
 function exit(i){
-
 			svg.append("text")
 			.style("font-weight", "bold")
 			.text("This completes the tutorial.")
@@ -438,21 +440,83 @@ function tutorial1(i){
 }
 
 function tutorial2(i){
-	console.log("sdhfskdhkf");
-				svg.append("image")
-				.attr("xlink:href", "modules/tutorial/TwoViewer.png")
-				.attr("width", 720)
-				.attr("height", 400)
-				.attr("x",0)
-				.attr("y",0);
-				svg.append("text")
-				.text("Moving lines will be displayed")
-				.attr("x",360)
-				.attr("y",390);
-				svg.append("text")
-				.text("on the left part")
-				.attr("x",360)
-				.attr("y",430);
+	switch(i){
+		case 1: 
+			svg.append("image")
+			.attr("xlink:href", "modules/tutorial/TwoViewer.png")
+			.attr("width", 720)
+			.attr("height", 400)
+			.attr("x",0)
+			.attr("y",0);
+
+			svg.append("text")
+			.text("You must focus on a section of the chart using the Enter Button and it will disply on the left pane")
+			.attr("x",360)
+			.attr("y",390);
+
+			svg.append("text")
+			.text("After choosing a section you should highlight the anomoly with your mouse")
+			.attr("x",360)
+			.attr("y",430);
+
+		case 2: 
+			createTwoPaneExample()
+			
+	}
+}
+
+function createTwoPaneExample(className){
+
+		var svgContainer = d3.select("svg#container")
+
+		var xAxis=d3.svg.axis().scale(x).orient("bottom");
+
+		svg1 = svgContainer.append("g")
+		.attr("class","svg1")
+		.attr("transform", "translate(" +40+ "," + 20 + ")");
+
+		svg1.append("g")
+		.attr("class","x axis")
+		.attr("transform","translate(0," + y(0)+")")
+		.call(xAxis);
+
+		svg1.append("defs").append("clipPath")
+		.attr("id","clip")
+		.append("rect")
+		.attr("width",width)
+		.attr("height",height+500);
+
+		svg1.append("defs").append("clipPath")
+		.attr("id","clip2")
+		.append("rect")
+		.attr("transform","translate(0,0)")
+		.attr("width",width)
+		.attr("height",height+500);
+
+		svg1.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + y2(0) + ")")
+		.call(xAxis);
+
+		svg1.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + y3(0) + ")")
+		.call(xAxis);
+
+		var borderPath = svg1.append("rect")
+		.attr("class","border")
+		.attr("x",0)
+		.attr("y",0)
+		.attr("width",width)
+		.attr("height",height)
+		.style("stroke","#A4A4A4")
+		.style("fill","none")
+		.style("stroke-width",3)
+		.attr("rx",20)
+		.attr("ry",20);
+
+
+
 }
 
 function tutorial3(i){
