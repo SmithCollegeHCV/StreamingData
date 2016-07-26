@@ -71,12 +71,20 @@ module.exports = {
 			linesOnDisplay.remove();
 			general.addCopy();
 			component.addBrush();
-			submitButton = d3.select(".submitButton")
-			.on("mousedown", function (){
-				general.feedBack("submit", "button");
-				d3.select(".brush").call(brush.clear());
+			if(!d3.select(".submitButton").empty()){
+				submitButton = d3.select(".submitButton")
+				.on("mousedown", function (){
+					general.feedBack("submit", "button");
+					d3.select(".brush").call(brush.clear());
 
-			})
+				})
+			}else{
+				catagoryButton = d3.selectAll(".catagoryButtons")
+				.on("mousedown", function (){
+					general.feedBack(d3.select(this).attr('name'), "button");
+					d3.select(".brush").call(brush.clear());
+				})
+			}
 		}else{
 			general.feedBack(buttonTitle, type);
 		}
@@ -588,6 +596,7 @@ createCopyViewer:function(className){
 	
 
 },
+
 addSubmitButton : function(className){
 	var submitButton = d3.select("#"+className)
 	.append("button")
@@ -595,6 +604,7 @@ addSubmitButton : function(className){
 	.attr('class', 'submitButton')
 	.attr('name','researchButton');
 }, 
+
 addCatagoryButtons: function(className){
 
 	var mainContainer =	 d3.select('#'+className);
@@ -603,19 +613,19 @@ addCatagoryButtons: function(className){
 		.append('button')
 		.text('Stretched Anomaly')
 		.attr("class", "catagoryButtons")
-		.attr('name', 'researchButton');
+		.attr('name', 'stretch');
 
 	var compressedButton = mainContainer
 		.append('button')
 		.text('Compressed Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'researchButton');
+		.attr('name', 'compress');
 
 	var spikeButton  = mainContainer
 		.append('button')
 		.text('Spike Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'researchButton');
+		.attr('name', 'spike');
 },
 /** creates brush component for user graph analysis
 *@memberof ComponentsModule

@@ -70,12 +70,20 @@ module.exports = {
 			linesOnDisplay.remove();
 			general.addCopy();
 			component.addBrush();
-			submitButton = d3.select(".submitButton")
-			.on("mousedown", function (){
-				general.feedBack("submit", "button");
-				d3.select(".brush").call(brush.clear());
+			if(!d3.select(".submitButton").empty()){
+				submitButton = d3.select(".submitButton")
+				.on("mousedown", function (){
+					general.feedBack("submit", "button");
+					d3.select(".brush").call(brush.clear());
 
-			})
+				})
+			}else{
+				catagoryButton = d3.selectAll(".catagoryButtons")
+				.on("mousedown", function (){
+					general.feedBack(d3.select(this).attr('name'), "button");
+					d3.select(".brush").call(brush.clear());
+				})
+			}
 		}else{
 			general.feedBack(buttonTitle, type);
 		}

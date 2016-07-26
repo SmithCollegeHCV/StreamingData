@@ -287,6 +287,7 @@ createCopyViewer:function(className){
 	
 
 },
+
 addSubmitButton : function(className){
 	var submitButton = d3.select("#"+className)
 	.append("button")
@@ -294,6 +295,7 @@ addSubmitButton : function(className){
 	.attr('class', 'submitButton')
 	.attr('name','researchButton');
 }, 
+
 addCatagoryButtons: function(className){
 
 	var mainContainer =	 d3.select('#'+className);
@@ -302,19 +304,19 @@ addCatagoryButtons: function(className){
 		.append('button')
 		.text('Stretched Anomaly')
 		.attr("class", "catagoryButtons")
-		.attr('name', 'researchButton');
+		.attr('name', 'stretch');
 
 	var compressedButton = mainContainer
 		.append('button')
 		.text('Compressed Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'researchButton');
+		.attr('name', 'compress');
 
 	var spikeButton  = mainContainer
 		.append('button')
 		.text('Spike Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'researchButton');
+		.attr('name', 'spike');
 },
 /** creates brush component for user graph analysis
 *@memberof ComponentsModule
