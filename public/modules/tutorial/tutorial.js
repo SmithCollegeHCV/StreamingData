@@ -328,6 +328,11 @@ function introduction(i){
 			.attr("y",400);
 
 		break;
+	function type(d){
+			d.index = d.index;
+			d.value = d.value;
+			return d;
+		}
 }
 }
 
