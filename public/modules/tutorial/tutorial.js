@@ -1,3 +1,4 @@
+
 step = 0;
 var n = 10;
 var tduration = 200000;
@@ -37,7 +38,7 @@ d3.select(".content").attr("align","center");
 var introPages = 6;
 var exitPages = 2;
 var tutorial1Pages = 0;
-var tutorial2Pages = 2;
+var tutorial2Pages = 1;
 var tutorial3Pages = 3;
 var tutorialPages = 0;
 
@@ -57,28 +58,53 @@ function setPageID(pageId){
 	
 }
 
-function checkKeyPressed(key) { 
+function setArrowDirection(step){
+	if (step == 0) {
+			d3.select("#back-button").style("visibility", "hidden");
+			d3.select("#forward-button").style("visibility", "visible");
+		} else if (step == introPages+ exitPages + tutorialPages - 1) {
+			d3.select("#back-button").style("visibility", "visible");
+			d3.select("#forward-button").style("visibility", "hidden");
+		} else {
+			d3.select("#back-button").style("visibility", "visible");
+			d3.select("#forward-button").style("visibility", "visible");
+		}
+}
 
+function removePrevious(){
+	svg.selectAll(".line")
+	.remove();
+	svg.selectAll("text")
+	.remove();
+	svg.selectAll("#line")
+	.remove();
+	svg.selectAll("image")
+	.remove();
+}
+
+
+function keepInBounds (){
+	if (step < 0){
+		step = 0;
+	}
+
+	if (step > introPages + tutorialPages + exitPages){
+		step == introPages + tutorialPages + exitPages; 
+	}
+}
+
+function checkKeyPressed(key) { 
 	if (key == "right") {
 		step += 1;
 	}
 	else if (key == "left"){
 		step -= 1;
 	}
-	console.log(step)
 
-	if (step == 0) {
-		d3.select("#back-button").style("visibility", "hidden");
-		d3.select("#forward-button").style("visibility", "visible");
-	} else if (step == introPages+ exitPages + tutorialPages - 1) {
-		d3.select("#back-button").style("visibility", "visible");
-		d3.select("#forward-button").style("visibility", "hidden");
-	} else {
-		d3.select("#back-button").style("visibility", "visible");
-		d3.select("#forward-button").style("visibility", "visible");
-	}
+	removePrevious()
+	setArrowDirection(step)
 
-
+	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
 		console.log('introduction')
