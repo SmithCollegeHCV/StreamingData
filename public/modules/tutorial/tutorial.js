@@ -50,18 +50,18 @@ function setPageID(pageId){
 
 function checkKeyPressed(key) { 
 
-	if ((key == "right") {
+	if (key == "right") {
 		step += 1;
 	}
-	else if ((key == "left"){
+	else if (key == "left"){
 		step -= 1;
 	}
 
 
-	if (i == 0) {
+	if (step == 0) {
 		d3.select("#back-button").style("visibility", "hidden");
 		d3.select("#forward-button").style("visibility", "visible");
-	} else if (i == 7) {
+	} else if (step == introPages+ exitPages + tutorialPages - 1) {
 		d3.select("#back-button").style("visibility", "visible");
 		d3.select("#forward-button").style("visibility", "hidden");
 	} else {
@@ -97,7 +97,7 @@ function validate() {
 }
 
 function introduction(i){
-
+	switch(i){
 	case 0||1:
 
 		var fileName = "data/file"+i+".tsv";
@@ -319,7 +319,7 @@ function introduction(i){
 			.attr("y",400);
 
 		break;
-
+}
 }
 
 function exit(i){
