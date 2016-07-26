@@ -70,12 +70,20 @@ module.exports = {
 			linesOnDisplay.remove();
 			general.addCopy();
 			component.addBrush();
-			submitButton = d3.select(".submitButton")
-			.on("mousedown", function (){
-				general.feedBack("submit", "button");
-				d3.select(".brush").call(brush.clear());
+			if(!d3.select(".submitButton").empty()){
+				submitButton = d3.select(".submitButton")
+				.on("mousedown", function (){
+					general.feedBack("submit", "button");
+					d3.select(".brush").call(brush.clear());
 
-			})
+				})
+			}else{
+				catagoryButton = d3.selectAll(".catagoryButtons")
+				.on("mousedown", function (){
+					general.feedBack(d3.select(this).attr('name'), "button");
+					d3.select(".brush").call(brush.clear());
+				})
+			}
 		}else{
 			general.feedBack(buttonTitle, type);
 		}
@@ -142,8 +150,11 @@ module.exports = {
 				experimentr.showNext();
 				general.pressed('next-button', "button");
 	
-				if(d3.select(".submitButton").empty()==false){
+				if(!d3.select(".submitButton").empty()){
 					d3.select(".submitButton").remove();
+				}
+				if(!d3.selectAll(".catagoryButtons").empty()){
+					d3.selectAll(".catagoryButtons").remove();
 				}
 				// socket.emit('disconnect');
 			} else {
@@ -200,7 +211,8 @@ module.exports = {
 		var postId = experimentr.postId();
 
 		
-		// console.log("button title", buttonTitle)
+		console.log("button title", buttonTitle)
+		console.log("is it present", isPresent)
 		interaction.interactionType = type;
 		interaction. buttonTitle = buttonTitle;
 		interaction.timePressed = timePressed;

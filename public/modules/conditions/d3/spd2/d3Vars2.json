@@ -1,0 +1,9 @@
+{
+	"vars": {
+		"className": "d3Spd2",
+		"dataPath1": "data/medium1.tsv",
+		"dataPath2": "data/medium2.tsv",
+		"dataPath3": "data/medium3.tsv",
+		"duration": "38"
+	}
+}

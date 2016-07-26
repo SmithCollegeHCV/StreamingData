@@ -48,10 +48,30 @@ svg {
   cursor: pointer;
   outline:none;
 }
+
 .submitButton:hover{
   background-color: #3e8e41;
 }
 .submitButton:active{
   background-color: #3e8e41;
   transform: translateY(4px);
+}
+
+.catagoryButtons{
+  position: relative;
+  height: 35px;
+  margin: 10px;
+  background-color: #4CAF50;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  outline:none;
+  float:left;
+}
+
+div#catagoryButtonContainer{
+    position: absolute;
+    left: 57%;
 }
