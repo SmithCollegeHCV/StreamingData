@@ -373,9 +373,6 @@ function introduction(i){
 }
 
 function exit(i){
-	d3.select("#container").attr("height", 150);
-
-
 
 			svg.append("text")
 			.style("font-weight", "bold")
