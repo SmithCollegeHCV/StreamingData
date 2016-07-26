@@ -34,24 +34,63 @@ var svg = d3.select(".content")
 
 d3.select(".content").attr("align","center");
 
-var introPages = 3;
-var exitPages = 0;
+var introPages = 6;
+var exitPages = 2;
 var tutorial1Pages = 0;
-var tutorial2Pages = 0;
-var tutorial3Pages = 0;
+var tutorial2Pages = 2;
+var tutorial3Pages = 3;
+var tutorialPages = 0;
+
+var pageId = null;
+
+
+function setPageID(pageId){
+	this.pageId = pageId;
+}
 
 function checkKeyPressed(key) { 
 
-	if ((key == "right") && (step < 7)) {
+	if ((key == "right") {
 		step += 1;
-		update(step);
 	}
-	else if ((key == "left") && (step  > 0)){
+	else if ((key == "left"){
 		step -= 1;
-		update(step);
-		d3.select()
-	}  
+	}
+
+
+	if (i == 0) {
+		d3.select("#back-button").style("visibility", "hidden");
+		d3.select("#forward-button").style("visibility", "visible");
+	} else if (i == 7) {
+		d3.select("#back-button").style("visibility", "visible");
+		d3.select("#forward-button").style("visibility", "hidden");
+	} else {
+		d3.select("#back-button").style("visibility", "visible");
+		d3.select("#forward-button").style("visibility", "visible");
+	}
+
+
+	if(step >= 0 && step <= introPages - 1){
+		introduction(step)
+		//introduction
+	}else if(step > introPages && step <= introPages + tutorialPages){
+		if(pageId == 'tutorial1'){
+			tutorial1(step)
+		}else if(pageId == 'tutorial2'){
+			tutorial2(step)
+		}else{
+			tutorial3(step)
+		}
+		//the tutorial 
+	}else if(step > introPages + tutorialPages && step <= introPages + tutorialPages + exitPages){
+		//the exit 
+		exit(step)
+	}else{
+		//see if I missed something. 
+		console.log("this is whate")
+	}
 }
+
 function validate() {
 	experimentr.endTimer('demo');
 	experimentr.release();
@@ -283,7 +322,7 @@ function introduction(i){
 
 }
 
-function tutorialEnd(i){
+function exit(i){
 	d3.select("#container").attr("height", 150);
 
 
@@ -386,18 +425,3 @@ function setup(){
 	experimentr.hideNext();
 }
 
-function update(i){
-
-
-	if (i == 0) {
-		d3.select("#back-button").style("visibility", "hidden");
-		d3.select("#forward-button").style("visibility", "visible");
-	} else if (i == 7) {
-		d3.select("#back-button").style("visibility", "visible");
-		d3.select("#forward-button").style("visibility", "hidden");
-	} else {
-		d3.select("#back-button").style("visibility", "visible");
-		d3.select("#forward-button").style("visibility", "visible");
-	}
-
-	}
