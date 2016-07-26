@@ -151,8 +151,11 @@ module.exports = {
 				experimentr.showNext();
 				general.pressed('next-button', "button");
 	
-				if(d3.select(".submitButton").empty()==false){
+				if(!d3.select(".submitButton").empty()){
 					d3.select(".submitButton").remove();
+				}
+				if(!d3.selectAll(".catagoryButtons").empty()){
+					d3.selectAll(".catagoryButtons").remove();
 				}
 				// socket.emit('disconnect');
 			} else {
@@ -608,7 +611,9 @@ addSubmitButton : function(className){
 
 addCatagoryButtons: function(className){
 
-	var mainContainer =	 d3.select('#'+className);
+	var mainContainer =	 d3.select('#'+className)
+	.append("div")
+	.attr('id', "catagoryButtonContainer");
 
 	var stretchButton = mainContainer
 		.append('button')
@@ -709,7 +714,7 @@ init = function(){
     	component.addGraph(className, path1, path2, path3,duration);
 	};
 
-	general.countdown( "countdown", 5, 0 );
+	general.countdown( "countdown", 5, 0);
 	
 }();
 
