@@ -65,7 +65,7 @@ function checkKeyPressed(key) {
 	else if (key == "left"){
 		step -= 1;
 	}
-
+	console.log(step)
 
 	if (step == 0) {
 		d3.select("#back-button").style("visibility", "hidden");
@@ -81,14 +81,17 @@ function checkKeyPressed(key) {
 
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
-		//introduction
+		console.log('introduction')
 	}else if(step > introPages && step <= introPages + tutorialPages){
 		if(pageId == 'tutorial1'){
 			tutorial1(step)
+			console.log('tutorial1')
 		}else if(pageId == 'tutorial2'){
+			console.log('tutorial2')
 			tutorial2(step)
 		}else{
 			tutorial3(step)
+			console.log('tutorial3')
 		}
 		//the tutorial 
 	}else if(step > introPages + tutorialPages && step <= introPages + tutorialPages + exitPages){
@@ -106,7 +109,9 @@ function validate() {
 }
 
 function introduction(i){
+	console.log(i)
 	switch(i){
+
 	case 0||1:
 
 		var fileName = "data/file"+i+".tsv";
