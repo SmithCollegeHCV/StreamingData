@@ -298,7 +298,9 @@ addSubmitButton : function(className){
 
 addCatagoryButtons: function(className){
 
-	var mainContainer =	 d3.select('#'+className);
+	var mainContainer =	 d3.select('#'+className)
+	.append("div")
+	.attr('id', "catagoryButtonContainer");
 
 	var stretchButton = mainContainer
 		.append('button')

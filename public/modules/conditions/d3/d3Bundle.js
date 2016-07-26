@@ -151,15 +151,18 @@ module.exports = {
 				experimentr.showNext();
 				general.pressed('next-button', "button");
 	
-				if(d3.select(".submitButton").empty()==false){
+				if(!d3.select(".submitButton").empty()){
 					d3.select(".submitButton").remove();
+				}
+				if(!d3.selectAll(".catagoryButtons").empty()){
+					d3.selectAll(".catagoryButtons").remove();
 				}
 				// socket.emit('disconnect');
 			} else {
 				time = new Date( msLeft );
 				hours = time.getUTCHours();
 				mins = time.getUTCMinutes();
-				console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
+				// console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
 				element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
 				setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
 			}
@@ -209,7 +212,8 @@ module.exports = {
 		var postId = experimentr.postId();
 
 		
-		// console.log("button title", buttonTitle)
+		console.log("button title", buttonTitle)
+		console.log("is it present", isPresent)
 		interaction.interactionType = type;
 		interaction. buttonTitle = buttonTitle;
 		interaction.timePressed = timePressed;
@@ -607,7 +611,9 @@ addSubmitButton : function(className){
 
 addCatagoryButtons: function(className){
 
-	var mainContainer =	 d3.select('#'+className);
+	var mainContainer =	 d3.select('#'+className)
+	.append("div")
+	.attr('id', "catagoryButtonContainer");
 
 	var stretchButton = mainContainer
 		.append('button')
@@ -708,7 +714,7 @@ init = function(){
     	component.addGraph(className, path1, path2, path3,duration);
 	};
 
-	general.countdown( "countdown", 5, 0 );
+	general.countdown( "countdown", 1, 0 );
 	
 }();
 

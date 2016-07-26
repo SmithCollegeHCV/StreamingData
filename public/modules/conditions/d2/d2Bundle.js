@@ -159,7 +159,7 @@ module.exports = {
 				time = new Date( msLeft );
 				hours = time.getUTCHours();
 				mins = time.getUTCMinutes();
-				console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
+				// console.log("Is Anomoly present : "+ general.checkForAnamoly()+", time "+(hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() ))
 				element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
 				setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
 			}
@@ -209,7 +209,8 @@ module.exports = {
 		var postId = experimentr.postId();
 
 		
-		// console.log("button title", buttonTitle)
+		console.log("button title", buttonTitle)
+		console.log("is it present", isPresent)
 		interaction.interactionType = type;
 		interaction. buttonTitle = buttonTitle;
 		interaction.timePressed = timePressed;
