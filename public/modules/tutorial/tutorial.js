@@ -46,6 +46,15 @@ var pageId = null;
 
 function setPageID(pageId){
 	this.pageId = pageId;
+
+	if(pageId == "tutorial1"){
+		tutorialPages = tutorial1Pages;
+	}else if(pageId == "tutorial2"){
+		tutorialPages = tutorial2Pages;
+	}else{
+		tutorialPages = tutorial3Pages;
+	}
+	
 }
 
 function checkKeyPressed(key) { 
