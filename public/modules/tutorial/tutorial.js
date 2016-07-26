@@ -26,6 +26,10 @@ var ty3 = d3.scale.linear()
 .domain([-2.5, 2.5])
 .range([350, 250]);
 
+var tmargin = {top:20, right:20, bottom:20, left:20},
+ twidth = 600 - tmargin.left - tmargin.right,
+ theight = 500 - tmargin.top - tmargin.bottom;
+
 var svg = d3.select(".content")
 .append("svg:svg")
 .attr("id", "container")
@@ -442,7 +446,6 @@ function tutorial1(i){
 function tutorial2(i){
 		console.log('tutorial1 step ',i )
 	switch(i){
-
 		case 0: 
 			svg.append("image")
 			.attr("xlink:href", "modules/tutorial/TwoViewer.png")
@@ -460,7 +463,7 @@ function tutorial2(i){
 			.text("After choosing a section you should highlight the anomoly with your mouse")
 			.attr("x",360)
 			.attr("y",430);
-
+		break;
 		case 1: 
 			createTwoPaneExample()
 			
@@ -471,7 +474,7 @@ function createTwoPaneExample(className){
 
 		var svgContainer = d3.select("svg#container")
 
-		var xAxis=d3.svg.axis().scale(x).orient("bottom");
+		var xAxis=d3.svg.axis().scale(tx).orient("bottom");
 
 		svg1 = svgContainer.append("g")
 		.attr("class","svg1")
@@ -479,44 +482,145 @@ function createTwoPaneExample(className){
 
 		svg1.append("g")
 		.attr("class","x axis")
-		.attr("transform","translate(0," + y(0)+")")
+		.attr("transform","translate(0," + ty(0)+")")
 		.call(xAxis);
 
 		svg1.append("defs").append("clipPath")
 		.attr("id","clip")
 		.append("rect")
-		.attr("width",width)
-		.attr("height",height+500);
+		.attr("width",twidth)
+		.attr("height",theight+500);
 
 		svg1.append("defs").append("clipPath")
 		.attr("id","clip2")
 		.append("rect")
 		.attr("transform","translate(0,0)")
-		.attr("width",width)
-		.attr("height",height+500);
+		.attr("width",twidth)
+		.attr("height",theight+500);
 
 		svg1.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + y2(0) + ")")
+		.attr("transform", "translate(0," + ty2(0) + ")")
 		.call(xAxis);
 
 		svg1.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + y3(0) + ")")
+		.attr("transform", "translate(0," + ty3(0) + ")")
 		.call(xAxis);
 
 		var borderPath = svg1.append("rect")
 		.attr("class","border")
 		.attr("x",0)
 		.attr("y",0)
-		.attr("width",width)
-		.attr("height",height)
+		.attr("width",twidth)
+		.attr("height",theight)
 		.style("stroke","#A4A4A4")
 		.style("fill","none")
 		.style("stroke-width",3)
 		.attr("rx",20)
 		.attr("ry",20);
 
+		var q = d3.queue();
+		q.defer(d3.tsv, "../data/file0.tsv")
+		q.defer(d3.tsv, "../data/file2.tsv")
+		q.defer(d3.tsv, "../data/file3.tsv")
+		.await(setUp); 
+
+
+
+		function setUp(error, data1, data2, data3){
+			if (error) throw error;
+
+
+			var disData1 = data1.slice(0,n);
+			var disData2 = data2.slice(0,n);
+			var disData3 = data3.slice(0,n);
+			
+			data1.splice(0,n);
+			data2.splice(0,n);
+			data3.splice(0,n);
+
+			var line1  = d3.svg.line()
+			.x(function(d,i){return tx(i);})
+			.y(function(d){ return  ty(parseFloat(d.value));})
+			.interpolate("basis");
+
+			var line2 = d3.svg.line()
+			.x(function(d,i){return tx(i);})
+			.y(function(d){ return  ty2(parseFloat(d.value));})
+			.interpolate("basis");
+
+			var line3 = d3.svg.line()
+			.x(function(d,i){return tx(i);})
+			.y(function(d){ return  ty3(parseFloat(d.value));})
+			.interpolate("basis");
+
+			var path1 =svg1.append("g")
+			.attr("clip-path","url(#clip)")
+			.append("path")
+			.datum(disData1)
+			.attr("class","line1")
+			.attr("d",line1);
+
+			var path2 = svg1.append("g")
+			.attr("clip-path","url(#clip)")
+			.append("path")
+			.datum(disData2)
+			.attr("class","line2")
+			.attr("d",line2);
+
+			var path3= svg1.append("g")
+			.attr("clip-path","url(#clip)")
+			.append("path")
+			.datum(disData3)
+			.attr("class","line3")
+			.attr("d",line3);
+
+			tick();
+
+			function tick(){
+
+				disData1.push(data1.slice(0,1)[0]);
+				data1.splice(0,1);
+
+
+				if(data1.length>=1){
+					path1
+					.attr("d",line1)
+					.attr("transform",null)
+					.transition()
+					.duration(tduration)
+					.ease("linear")
+					.attr("transform", "translate(" + tx(-1) + ",0)")
+					disData1.shift();
+
+					disData2.push(data2.slice(0,1)[0]);
+					data2.splice(0,1);
+					path2
+					.attr("d",line2)
+					.attr("transform",null)
+					.transition()
+					.duration(tduration)
+					.ease("linear")
+					.attr("transform", "translate(" + tx(-1) + ",0)")
+					disData2.shift();
+
+					disData3.push(data3.slice(0,1)[0]);;
+					data3.splice(0,1);
+					path3
+					.attr("d",line3)
+					.attr("transform",null)
+					.transition()
+					.duration(tduration)
+					.ease("linear")
+					.attr("transform", "translate(" + tx(-1) + ",0)")
+					.each("end",tick);
+					disData3.shift();
+
+				}
+
+			};
+		};
 
 
 }
