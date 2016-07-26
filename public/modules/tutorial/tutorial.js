@@ -108,9 +108,9 @@ function checkKeyPressed(key) {
 	setArrowDirection(step)
 	console.log('step', step)
 
-	console.log('introPages + tutorialPages' , introPages + tutorialPages)
-	console.log('introPages', introPages)
-	console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
+	// console.log('introPages + tutorialPages' , introPages + tutorialPages)
+	// console.log('introPages', introPages)
+	// console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
 	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
@@ -118,19 +118,19 @@ function checkKeyPressed(key) {
 	}else if(step > introPages - 1 && step <= introPages + tutorialPages){
 
 		if(pageId == 'tutorial1'){
-			tutorial1(step)
+			tutorial1(step-introPages)
 			console.log('tutorial1')
 		}else if(pageId == 'tutorial2'){
 			console.log('tutorial2')
-			tutorial2(step)
+			tutorial2(step-introPages)
 		}else{
-			tutorial3(step)
+			tutorial3(step-introPages)
 			console.log('tutorial3')
 		}
 		//the tutorial 
 	}else if(step > introPages + tutorialPages && step <= introPages + tutorialPages + exitPages){
 		//the exit 
-		exit(step)
+		exit(step - introPages - tutorialPages)
 	}else{
 		//see if I missed something. 
 		console.log("this is whate")
@@ -440,8 +440,10 @@ function tutorial1(i){
 }
 
 function tutorial2(i){
+		console.log('tutorial1 step ',i )
 	switch(i){
-		case 1: 
+
+		case 0: 
 			svg.append("image")
 			.attr("xlink:href", "modules/tutorial/TwoViewer.png")
 			.attr("width", 720)
@@ -459,7 +461,7 @@ function tutorial2(i){
 			.attr("x",360)
 			.attr("y",430);
 
-		case 2: 
+		case 1: 
 			createTwoPaneExample()
 			
 	}
