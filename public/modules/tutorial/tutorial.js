@@ -100,6 +100,9 @@ function removePrevious(){
 	.remove();
 	d3.selectAll("g.svg2")
 	.remove();
+	d3.selectAll("g.svg1")
+	.remove();
+
 
 	d3.select("svg#container")
 	.attr("width", 750);
@@ -504,7 +507,7 @@ function createTwoPaneExample(){
 
 		svg1 = svgContainer.append("g")
 		.attr("class","svg1")
-		.attr("transform", "translate(" +40+ "," + 20 + ")");
+		.attr("transform", "translate(" +50+ "," + 20 + ")");
 
 		svg1.append("g")
 		.attr("class","x axis")
@@ -554,7 +557,7 @@ function createTwoPaneExample(){
 		
 	svg2 = svgContainer.append("g")
 	.attr("class","svg2")
-	.attr("transform", "translate(" +400+ "," + 20 + ")");
+	.attr("transform", "translate(" +650+ "," + 20 + ")");
 	
 	svg2.append("g")
 	.attr("class","x axis")
