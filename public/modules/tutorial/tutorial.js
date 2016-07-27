@@ -53,6 +53,13 @@ var pageId = null;
 var step = 0;
 setPageID();
 
+
+ initTutorial = function(){
+	Mousetrap.bind('left', function(e, n) { checkKeyPressed(n); });
+	Mousetrap.bind('right',function(e, n) { checkKeyPressed(n); });
+	experimentr.hideNext();
+}()
+
 function setPageID(){
 	this.pageId = d3.select("#module").selectAll("div")[0][0].getAttribute('id')
 
@@ -102,7 +109,7 @@ function keepInBounds(step){
 	return step
 }
 
-checkKeyPressed=function (key) {
+function checkKeyPressed(key) {
 	if (key == "right") {
 		step += 1;
 	}
