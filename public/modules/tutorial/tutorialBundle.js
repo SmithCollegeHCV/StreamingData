@@ -1163,6 +1163,11 @@ function tutorial2(i){
 
 function createTwoPaneExample(){
 
+	function brushed () {
+		var extent = brush.extent();
+		var min = Math.round(extent[0]);
+		var max = Math.round(extent[1]);
+	}
 
 	var svgContainer = d3.select("svg#container");
 
@@ -1215,7 +1220,7 @@ function createTwoPaneExample(){
 
 	brush = d3.svg.brush()
 		.x(x)
-		.on("brushend",component.brushed);
+		.on("brushend",brushed);
 
 		
 	svg2 = svgContainer.append("g")
@@ -1255,7 +1260,7 @@ function createTwoPaneExample(){
 	.attr("x",0)
 	.attr("y",0)
 	.attr("width",twidth)
-	.attr("height",theight)
+	.attr("height",theight-75)
 	.style("stroke","#A4A4A4")
 	.style("fill","none")
 	.style("stroke-width",3)
