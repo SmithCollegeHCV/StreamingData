@@ -1161,26 +1161,166 @@ function tutorial2(i){
 	}
 }
 
-function createTwoPaneExample(className){
-		console.log('two pane example')
+function createTwoPaneExample(){
 
-		d3.select("svg#container")
-		.attr("width", 750)
-		.attr("height", 500);
 
-		var svgContainer = d3.select("svg#container")
-		console.log(svgContainer)
-		component.createGraphViewer("svg#container");
-		component.addGraph(svgContainer,'../data/file0.tsv','../data/file1.tsv','../data/file2.tsv',100)
-		component.createCopyViewer("svg#container")
-		component.addSubmitButton("svg#container")
+	var svgContainer = d3.select("svg#container");
 
-		d3.select("g.svg2").attr("transform", "translate(150,20)")
+		var xAxis=d3.svg.axis().scale(x).orient("bottom");
+
+		svg1 = svgContainer.append("g")
+		.attr("class","svg1")
+		.attr("transform", "translate(" +40+ "," + 20 + ")");
+
+		svg1.append("g")
+		.attr("class","x axis")
+		.attr("transform","translate(0," + ty1(0)+")")
+		.call(xAxis);
+
+		svg1.append("defs").append("clipPath")
+		.attr("id","clip")
+		.append("rect")
+		.attr("width",twidth)
+		.attr("height",theight+500);
+
+		svg1.append("defs").append("clipPath")
+		.attr("id","clip2")
+		.append("rect")
+		.attr("transform","translate(0,0)")
+		.attr("width",twidth)
+		.attr("height",theight+500);
+
+		svg1.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + ty2(0) + ")")
+		.call(xAxis);
+
+		svg1.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + ty3(0) + ")")
+		.call(xAxis);
+
+		var borderPath = svg1.append("rect")
+		.attr("class","border")
+		.attr("x",0)
+		.attr("y",0)
+		.attr("width",twidth)
+		.attr("height",theight)
+		.style("stroke","#A4A4A4")
+		.style("fill","none")
+		.style("stroke-width",3)
+		.attr("rx",20)
+		.attr("ry",20);
+
+
+	var q = d3.queue();
+		q.defer(d3.tsv, "data/slow1.tsv")
+		q.defer(d3.tsv, "data/slow2.tsv")
+		q.defer(d3.tsv, "data/slow3.tsv")
+		.await(setUp); 
+
+
+		function setUp(error, data1, data2, data3){
+			if (error) throw error;
+
+
+			var disData1 = data1.slice(0,80);
+			var disData2 = data2.slice(0,80);
+			var disData3 = data3.slice(0,80);
+
+
+			var line1  = d3.svg.line()
+			.x(function(d,i){return tx(i);})
+			.y(function(d){ return  ty1(parseFloat(d.value));})
+			.interpolate("basis");
+
+			var line2 = d3.svg.line()
+			.x(function(d,i){return tx(i);})
+			.y(function(d){ return  ty2(parseFloat(d.value));})
+			.interpolate("basis");
+
+			var line3 = d3.svg.line()
+			.x(function(d,i){return tx(i);})
+			.y(function(d){ return  ty3(parseFloat(d.value));})
+			.interpolate("basis");
+
+			var path1 =svg.append("g")
+			.attr("clip-path","url(#clip)")
+			.append("path")
+			.datum(disData1)
+			.attr("class","line1")
+			.attr("id","line")
+			.attr("d",line1);
+
+			var path2 = svg.append("g")
+			.attr("clip-path","url(#clip)")
+			.append("path")
+			.datum(disData2)
+			.attr("class","line2")
+			.attr("id","line")
+			.attr("d",line2);
+
+			var path3= svg.append("g")
+			.attr("clip-path","url(#clip)")
+			.append("path")
+			.datum(disData3)
+			.attr("class","line3")
+			.attr("id","line")
+			.attr("d",line3);
+
+
+
+			tick();
+
+			function tick(){
+
+
+				disData1.push(data1.slice(0,1)[0]);
+				data1.splice(0,1);
+				if(data1.length>=1){
+					path1
+					.attr("d",line1)
+					.attr("transform",null)
+					.transition()
+					.duration(100)
+					.ease("linear")
+					.attr("transform", "translate(" + tx(-1) + ",0)")
+					disData1.shift();
+
+					disData2.push(data2.slice(0,1)[0]);
+					data2.splice(0,1);
+					path2
+					.attr("d",line2)
+					.attr("transform",null)
+					.transition()
+					.duration(100)
+					.ease("linear")
+					.attr("transform", "translate(" + tx(-1) + ",0)")
+					disData2.shift();
+
+					disData3.push(data3.slice(0,1)[0]);;
+					data3.splice(0,1);
+					path3
+					.attr("d",line3)
+					.attr("transform",null)
+					.transition()
+					.duration(100)
+					.ease("linear")
+					.attr("transform", "translate(" + tx(-1) + ",0)")
+					.each("end",tick);
+					disData3.shift();
+				}else{
+					validate();
+				}
+
+			};
+
+
+
+
+		};
 
 	
-
-	
-
 }
 
 function tutorial3(i){
