@@ -710,7 +710,7 @@ var tmargin = {top:20, right:20, bottom:20, left:20},
 var svg = d3.select(".content")
 .append("svg:svg")
 .attr("id", "container")
-.attr("width",720)
+.attr("width",1500)
 .attr("height",500)
 .append("g");
 
@@ -1135,6 +1135,7 @@ function tutorial1(i){
 }
 
 function tutorial2(i){
+	
 		console.log('tutorial1 step ', i )
 	switch(i){
 		case 0: 
@@ -1162,7 +1163,8 @@ function tutorial2(i){
 }
 
 function createTwoPaneExample(){
-
+	d3.select("svg#container")
+	.attr("width", 1500);
 	function brushed () {
 		var extent = brush.extent();
 		var min = Math.round(extent[0]);
@@ -1225,7 +1227,7 @@ function createTwoPaneExample(){
 		
 	svg2 = svgContainer.append("g")
 	.attr("class","svg2")
-	.attr("transform", "translate(" +650+ "," + 20 + ")");
+	.attr("transform", "translate(" +400+ "," + 20 + ")");
 	
 	svg2.append("g")
 	.attr("class","x axis")
