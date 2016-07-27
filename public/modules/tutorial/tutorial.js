@@ -495,11 +495,7 @@ function tutorial2(i){
 function createTwoPaneExample(){
 	d3.select("svg#container")
 	.attr("width", 1500);
-	function brushed () {
-		var extent = brush.extent();
-		var min = Math.round(extent[0]);
-		var max = Math.round(extent[1]);
-	}
+	
 
 	var svgContainer = d3.select("svg#container");
 
@@ -550,10 +546,6 @@ function createTwoPaneExample(){
 		.attr("ry",20);
 
 
-	brush = d3.svg.brush()
-		.x(x)
-		.on("brushend",brushed);
-
 		
 	svg2 = svgContainer.append("g")
 	.attr("class","svg2")
@@ -598,6 +590,28 @@ function createTwoPaneExample(){
 	.style("stroke-width",3)
 	.attr("rx",20)
 	.attr("ry",20);
+	
+	brush = d3.svg.brush()
+		.x(x)
+		.on("brushend",brushed);
+
+	svg2.append("g")
+	.attr("class","brush")
+	.call(brush)
+	.selectAll("rect")
+	.attr("height",theight-75);
+
+
+	function brushed () {
+		var extent = brush.extent();
+		var min = Math.round(extent[0]);
+		var max = Math.round(extent[1]);
+		if (d3.select(".copy3")[0][0] != null){
+		selectedPoints = lines.noise1.slice(min,max).concat(lines.noise2.slice(min,max)).concat(lines.noise3.slice(min,max));
+		// console.log('in create components: selected Points = ',selectedPoints);
+	}
+	}
+
 	
 
 
