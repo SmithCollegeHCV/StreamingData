@@ -773,6 +773,9 @@ function removePrevious(){
 	.remove();
 	d3.selectAll("g.svg2")
 	.remove();
+
+	d3.select("svg#container")
+	.attr("width", 750);
 }
 
 
@@ -1160,13 +1163,24 @@ function tutorial2(i){
 
 function createTwoPaneExample(className){
 		console.log('two pane example')
+
+		d3.select("svg#container")
+		.attr("width", 750)
+		.attr("height", 500);
+
 		var svgContainer = d3.select("svg#container")
 		console.log(svgContainer)
 		component.createGraphViewer("svg#container");
-		d3.select("g.svg2").attr("transform", "translate(100,100)")
 		component.addGraph(svgContainer,'../data/file0.tsv','../data/file1.tsv','../data/file2.tsv',100)
 		component.createCopyViewer("svg#container")
 		component.addSubmitButton("svg#container")
+
+		d3.select("g.svg2").attr("transform", "translate(150,20)")
+
+	
+
+	
+
 }
 
 function tutorial3(i){
@@ -1182,8 +1196,9 @@ function setup(){
 	.remove();
 	svg.selectAll("image")
 	.remove();
-	d3.select("#container").attr("height", 450);
+	d3.select("svg#container").attr("height", 450);
 	experimentr.hideNext();
+
 }
 
 
