@@ -44,7 +44,7 @@ var svg = d3.select(".content")
 d3.select(".content").attr("align","center");
 
 var introPages = 6;
-var exitPages = 2;
+var exitPages = 1;
 var tutorial1Pages = 0;
 var tutorial2Pages = 2;
 var tutorial3Pages = 2;
@@ -81,7 +81,7 @@ function setArrowDirection(step){
 	if (step == 0) {
 			d3.select("#back-button").style("visibility", "hidden");
 			d3.select("#forward-button").style("visibility", "visible");
-		} else if (step == introPages+ exitPages + tutorialPages - 1) {
+		} else if (step == introPages+ exitPages + tutorialPages-1) {
 			d3.select("#back-button").style("visibility", "visible");
 			d3.select("#forward-button").style("visibility", "hidden");
 		} else {
@@ -118,8 +118,8 @@ function keepInBounds(step){
 		step = 0;
 	}
 
-	if (step > introPages + tutorialPages + exitPages){
-		step = introPages + tutorialPages + exitPages; 
+	if (step > introPages + tutorialPages + exitPages-1){
+		step = introPages + tutorialPages + exitPages-1; 
 	}
 	return step
 }
@@ -157,7 +157,7 @@ function checkKeyPressed(key) {
 			console.log('tutorial3')
 		}
 		//the tutorial 
-	}else if(step >= introPages + tutorialPages && step <= introPages + tutorialPages + exitPages){
+	}else if(step >= introPages + tutorialPages && step <= introPages + tutorialPages + exitPages-1){
 		//the exit 
 		exit(step - introPages - tutorialPages)
 	}else{
