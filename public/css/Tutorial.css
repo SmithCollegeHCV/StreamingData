@@ -77,6 +77,35 @@ p{
 	margin-right:auto;
 }
 
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.submitButton{
+  position: absolute;
+  top: 580px;
+  left: 900px;
+  height: 35px;
+  width: 75px;
+  background-color: #4CAF50;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  outline:none;
+}
+.submitButton:hover{
+  background-color: #3e8e41;
+}
+.submitButton:active{
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+
 .line{
 	fill: none;
 	stroke: black;

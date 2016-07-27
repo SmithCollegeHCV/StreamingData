@@ -58,6 +58,7 @@ var step = 0;
  initTutorial = function(){
 	Mousetrap.bind('left', function(e, n) { checkKeyPressed(n); });
 	Mousetrap.bind('right',function(e, n) { checkKeyPressed(n); });
+	Mousetrap.bind('enter', function(e,n){  addCopy(); });
 	experimentr.hideNext();
 	setPageID();
 }()
@@ -166,6 +167,50 @@ function validate() {
 	experimentr.endTimer('demo');
 	experimentr.release();
 }
+
+function addCopy(){
+		lines = new general.getPoints();
+		points1 = lines.points1;
+		points2 = lines.points2;
+		points3 = lines.points3;
+		var copy1  = d3.svg.line()
+		.x(function(d,i){return tx(i);})
+		.y(function(d){ return  ty1(parseFloat(d));})
+		.interpolate("basis");
+
+		var copy2 = d3.svg.line()
+		.x(function(d,i){return tx(i);})
+		.y(function(d){ return  ty2(parseFloat(d));})
+		.interpolate("basis");
+
+		var copy3 = d3.svg.line()
+		.x(function(d,i){return tx(i);})
+		.y(function(d){ return  ty3(parseFloat(d));})
+		.interpolate("basis");
+
+		var copyPath1 =svg2.append("g")
+		.attr("clip-path","url(#clip)")
+		.append("path")
+		.datum(points1)
+		.attr("class","line1 copy1")
+		.attr("id","lineCopy")
+		.attr("d",copy1);
+		var copyPath2 = svg2.append("g")
+		.attr("clip-path","url(#clip)")
+		.append("path")
+		.datum(points2)
+		.attr("class","line2 copy2")
+		.attr("id","lineCopy")
+		.attr("d",copy2);
+
+		var copyPath3= svg2.append("g")
+		.attr("clip-path","url(#clip)")
+		.append("path")
+		.datum(points3)
+		.attr("class","line3 copy3")
+		.attr("id","lineCopy")
+		.attr("d",copy3);
+	}
 
 function introduction(i){
 	console.log(i)
@@ -497,6 +542,7 @@ function createTwoPaneExample(){
 	.attr("width", 1500);
 	
 
+
 	var svgContainer = d3.select("svg#container");
 
 		var xAxis=d3.svg.axis().scale(x).orient("bottom");
@@ -606,15 +652,9 @@ function createTwoPaneExample(){
 		var extent = brush.extent();
 		var min = Math.round(extent[0]);
 		var max = Math.round(extent[1]);
-		if (d3.select(".copy3")[0][0] != null){
-		selectedPoints = lines.noise1.slice(min,max).concat(lines.noise2.slice(min,max)).concat(lines.noise3.slice(min,max));
-		// console.log('in create components: selected Points = ',selectedPoints);
-	}
 	}
 
 	
-
-
 	var q = d3.queue();
 		q.defer(d3.tsv, "data/slow1.tsv")
 		q.defer(d3.tsv, "data/slow2.tsv")
@@ -720,6 +760,11 @@ function createTwoPaneExample(){
 
 
 		};
+
+	svgContainer.append("button")
+	.text('submit')
+	.attr('class', 'submitButton')
+	.attr('name','researchButton');
 
 	
 }
