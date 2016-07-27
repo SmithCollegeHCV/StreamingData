@@ -98,6 +98,8 @@ function removePrevious(){
 	.remove();
 	svg.selectAll("image")
 	.remove();
+	d3.selectAll("g.svg2")
+	.remove();
 }
 
 
@@ -488,6 +490,7 @@ function createTwoPaneExample(className){
 		var svgContainer = d3.select("svg#container")
 		console.log(svgContainer)
 		component.createGraphViewer("svg#container");
+		d3.select("g.svg2").attr("transform", "translate(100,100)")
 		component.addGraph(svgContainer,'../data/file0.tsv','../data/file1.tsv','../data/file2.tsv',100)
 		component.createCopyViewer("svg#container")
 		component.addSubmitButton("svg#container")
