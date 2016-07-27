@@ -1,5 +1,6 @@
 
-var components =  require('../conditions/conditionComponents')
+general =  require('../conditions/general')
+component = require('../conditions/conditionComponents')
 
 step = 0;
 var n = 10;
@@ -51,17 +52,19 @@ var tutorialPages = 0;
 
 var pageId = null;
 var step = 0;
-setPageID();
+
 
 
  initTutorial = function(){
 	Mousetrap.bind('left', function(e, n) { checkKeyPressed(n); });
 	Mousetrap.bind('right',function(e, n) { checkKeyPressed(n); });
 	experimentr.hideNext();
+	setPageID();
 }()
 
 function setPageID(){
 	this.pageId = d3.select("#module").selectAll("div")[0][0].getAttribute('id')
+	console.log('PAGE ID',this.pageId);
 
 	if(pageId == "tutorial1"){
 		tutorialPages = tutorial1Pages;
@@ -131,10 +134,10 @@ function checkKeyPressed(key) {
 		console.log('introduction')
 	}else if(step > introPages - 1 && step <= introPages + tutorialPages){
 
-		if(pageId == 'tutorial1'){
+		if(this.pageId == 'tutorial1'){
 			tutorial1(step-introPages)
 			console.log('tutorial1')
-		}else if(pageId == 'tutorial2'){
+		}else if(this.pageId == 'tutorial2'){
 			console.log('tutorial2')
 			tutorial2(step-introPages)
 		}else{
@@ -454,7 +457,7 @@ function tutorial1(i){
 }
 
 function tutorial2(i){
-		console.log('tutorial1 step ',i )
+		console.log('tutorial1 step ', i )
 	switch(i){
 		case 0: 
 			svg.append("image")
@@ -476,18 +479,18 @@ function tutorial2(i){
 		break;
 		case 1: 
 			createTwoPaneExample()
-			
+		break;		
 	}
 }
 
 function createTwoPaneExample(className){
-
+		console.log('two pane example')
 		var svgContainer = d3.select("svg#container")
-
-		components.createGraphViewer();
-		components.addGraph(svgContainer,'../data/file0.tsv','../data/file1.tsv','../data/file2.tsv',100)
-		components.createCopyViewer(svgContainer)
-		components.addSubmitButton(svgContainer)
+		console.log(svgContainer)
+		component.createGraphViewer("svg#container");
+		component.addGraph(svgContainer,'../data/file0.tsv','../data/file1.tsv','../data/file2.tsv',100)
+		component.createCopyViewer("svg#container")
+		component.addSubmitButton("svg#container")
 }
 
 function tutorial3(i){
