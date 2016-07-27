@@ -540,6 +540,57 @@ function createTwoPaneExample(){
 		.attr("ry",20);
 
 
+	brush = d3.svg.brush()
+		.x(x)
+		.on("brushend",component.brushed);
+
+		
+	svg2 = svgContainer.append("g")
+	.attr("class","svg2")
+	.attr("transform", "translate(" +650+ "," + 20 + ")");
+	
+	svg2.append("g")
+	.attr("class","x axis")
+	.attr("transform","translate(0," + ty(0)+")")
+	.call(xAxis);
+
+	svg2.append("defs").append("clipPath")
+	.attr("id","clip")
+	.append("rect")
+	.attr("width",twidth)
+	.attr("height",theight+500);
+
+	svg2.append("defs").append("clipPath")
+	.attr("id","clip2")
+	.append("rect")
+	.attr("transform","translate(0,0)")
+	.attr("width",twidth)
+	.attr("height",theight+500);
+
+	svg2.append("g")
+	.attr("class", "x axis")
+	.attr("transform", "translate(0," + ty2(0) + ")")
+	.call(xAxis);
+
+	svg2.append("g")
+	.attr("class", "x axis")
+	.attr("transform", "translate(0," + ty3(0) + ")")
+	.call(xAxis);
+
+	var borderPath = svg2.append("rect")
+	.attr("class","border")
+	.attr("x",0)
+	.attr("y",0)
+	.attr("width",twidth)
+	.attr("height",theight)
+	.style("stroke","#A4A4A4")
+	.style("fill","none")
+	.style("stroke-width",3)
+	.attr("rx",20)
+	.attr("ry",20);
+	
+
+
 	var q = d3.queue();
 		q.defer(d3.tsv, "data/slow1.tsv")
 		q.defer(d3.tsv, "data/slow2.tsv")
