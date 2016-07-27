@@ -711,7 +711,7 @@ var svg = d3.select(".content")
 .append("svg:svg")
 .attr("id", "container")
 .attr("width",720)
-.attr("height",450)
+.attr("height",500)
 .append("g");
 
 d3.select(".content").attr("align","center");
@@ -1205,7 +1205,7 @@ function createTwoPaneExample(){
 		.attr("x",0)
 		.attr("y",0)
 		.attr("width",twidth)
-		.attr("height",theight)
+		.attr("height",theight-75)
 		.style("stroke","#A4A4A4")
 		.style("fill","none")
 		.style("stroke-width",3)
@@ -1244,7 +1244,7 @@ function createTwoPaneExample(){
 			.y(function(d){ return  ty3(parseFloat(d.value));})
 			.interpolate("basis");
 
-			var path1 =svg.append("g")
+			var path1 =svg1.append("g")
 			.attr("clip-path","url(#clip)")
 			.append("path")
 			.datum(disData1)
@@ -1252,7 +1252,7 @@ function createTwoPaneExample(){
 			.attr("id","line")
 			.attr("d",line1);
 
-			var path2 = svg.append("g")
+			var path2 = svg1.append("g")
 			.attr("clip-path","url(#clip)")
 			.append("path")
 			.datum(disData2)
@@ -1260,14 +1260,13 @@ function createTwoPaneExample(){
 			.attr("id","line")
 			.attr("d",line2);
 
-			var path3= svg.append("g")
+			var path3= svg1.append("g")
 			.attr("clip-path","url(#clip)")
 			.append("path")
 			.datum(disData3)
 			.attr("class","line3")
 			.attr("id","line")
 			.attr("d",line3);
-
 
 
 			tick();
