@@ -1,1 +1,1 @@
-console.error("Error: Cannot find module '/Users/sambehrens/Documents/summerWork16/LabCode/public/modules/tutorial/tutorial.js' from '/Users/sambehrens/Documents/summerWork16/LabCode'");
+console.error("Error: Parsing file /Users/sambehrens/Documents/summerWork16/LabCode/public/modules/tutorial/tutorial.js: Unsyntactic break (556:2)");
