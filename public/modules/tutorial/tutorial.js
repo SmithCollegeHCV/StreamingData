@@ -169,6 +169,11 @@ function validate() {
 }
 
 function addCopy(){
+
+		var linesOnDisplay = d3.selectAll("#lineCopy");
+		linesOnDisplay.remove();
+
+
 		lines = new general.getPoints();
 		points1 = lines.points1;
 		points2 = lines.points2;
@@ -532,12 +537,12 @@ function tutorial2(i){
 			.attr("y",430);
 		break;
 		case 1: 
-			createTwoPaneExample()
+			createTwoPaneExample("tutorial2")
 		break;		
 	}
 }
 
-function createTwoPaneExample(){
+function createTwoPaneExample(className){
 	d3.select("svg#container")
 	.attr("width", 1500);
 	
@@ -756,15 +761,25 @@ function createTwoPaneExample(){
 
 			};
 
-
-
-
 		};
 
-	svgContainer.append("button")
+	d3.select("div#"+className)
+	.append("button")
 	.text('submit')
 	.attr('class', 'submitButton')
-	.attr('name','researchButton');
+	.attr('name','researchButton')
+	.on("click", function(){
+		d3.selectAll(".brush").remove();
+
+
+		svg2.append("g")
+		.attr("class","brush")
+		.call(brush)
+		.selectAll("rect")
+		.attr("height",theight-75);
+
+		d3.select(".brush").call(brush.clear());
+	});
 
 	
 }
