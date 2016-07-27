@@ -719,12 +719,12 @@ d3.select(".content").attr("align","center");
 var introPages = 6;
 var exitPages = 2;
 var tutorial1Pages = 0;
-var tutorial2Pages = 1;
-var tutorial3Pages = 3;
+var tutorial2Pages = 2;
+var tutorial3Pages = 2;
 var tutorialPages = 0;
 
 var pageId = null;
-var step = 0;
+var step = -1;
 
 
 
@@ -777,6 +777,9 @@ function removePrevious(){
 	d3.selectAll("g.svg1")
 	.remove();
 
+	d3.selectAll("button")
+	.remove();
+
 
 	d3.select("svg#container")
 	.attr("width", 750);
@@ -807,14 +810,14 @@ function checkKeyPressed(key) {
 	setArrowDirection(step)
 	console.log('step', step)
 
-	// console.log('introPages + tutorialPages' , introPages + tutorialPages)
-	// console.log('introPages', introPages)
-	// console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
+	console.log('introPages + tutorialPages' , introPages + tutorialPages)
+	console.log('introPages', introPages)
+	console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
 	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
 		console.log('introduction')
-	}else if(step > introPages - 1 && step <= introPages + tutorialPages){
+	}else if(step > introPages - 1 && step <introPages + tutorialPages){
 
 		if(this.pageId == 'tutorial1'){
 			tutorial1(step-introPages)
@@ -827,7 +830,7 @@ function checkKeyPressed(key) {
 			console.log('tutorial3')
 		}
 		//the tutorial 
-	}else if(step > introPages + tutorialPages && step <= introPages + tutorialPages + exitPages){
+	}else if(step >= introPages + tutorialPages && step <= introPages + tutorialPages + exitPages){
 		//the exit 
 		exit(step - introPages - tutorialPages)
 	}else{
@@ -1002,7 +1005,7 @@ function introduction(i){
 
 				disData1.push(data1.slice(0,1)[0]);
 				data1.splice(0,1);
-				if(data1.length>=1){
+				
 					path1
 					.attr("d",line1)
 					.attr("transform",null)
@@ -1034,9 +1037,7 @@ function introduction(i){
 					.attr("transform", "translate(" + tx(-1) + ",0)")
 					.each("end",tick);
 					disData3.shift();
-				}else{
-					validate();
-				}
+				
 
 			};
 
@@ -1189,25 +1190,32 @@ function tutorial1(i){
 
 function tutorial2(i){
 	
-		console.log('tutorial1 step ', i )
+		console.log('tutorial2 step ', i )
 	switch(i){
 		case 0: 
+		d3.select("svg#container")
+		.attr("width", 1000);
 			svg.append("image")
 			.attr("xlink:href", "modules/tutorial/TwoViewer.png")
 			.attr("width", 720)
 			.attr("height", 400)
-			.attr("x",0)
+			.attr("x",200)
 			.attr("y",0);
 
 			svg.append("text")
-			.text("You must focus on a section of the chart using the Enter Button and it will disply on the left pane")
-			.attr("x",360)
-			.attr("y",390);
+			.text("You must focus on a section of the chart using the Enter Button ")
+			.attr("x",550)
+			.attr("y",400);
+
+			svg.append("text")
+			.text("and it will disply on the left pane")
+			.attr("x",550)
+			.attr("y",440);
 
 			svg.append("text")
 			.text("After choosing a section you should highlight the anomoly with your mouse")
-			.attr("x",360)
-			.attr("y",430);
+			.attr("x",550)
+			.attr("y",480);
 		break;
 		case 1: 
 			createTwoPaneExample("tutorial2")
@@ -1396,7 +1404,7 @@ function createTwoPaneExample(className){
 
 				disData1.push(data1.slice(0,1)[0]);
 				data1.splice(0,1);
-				if(data1.length>=1){
+				
 					path1
 					.attr("d",line1)
 					.attr("transform",null)
@@ -1428,9 +1436,7 @@ function createTwoPaneExample(className){
 					.attr("transform", "translate(" + tx(-1) + ",0)")
 					.each("end",tick);
 					disData3.shift();
-				}else{
-					validate();
-				}
+				
 
 			};
 
