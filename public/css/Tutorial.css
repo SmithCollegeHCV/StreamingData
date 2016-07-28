@@ -120,3 +120,22 @@ svg text{
 	fill: black;
 	font-size:20px;
 }
+
+.catagoryButtons{
+  position: relative;
+  height: 35px;
+  margin: 10px;
+  background-color: #4CAF50;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  outline:none;
+  float:left;
+}
+
+div#catagoryButtonContainer{
+    position: absolute;
+    left: 57%;
+}
