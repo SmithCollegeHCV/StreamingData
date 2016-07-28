@@ -720,7 +720,7 @@ var introPages = 6;
 var exitPages = 1;
 var tutorial1Pages = 0;
 var tutorial2Pages = 2;
-var tutorial3Pages = 2;
+var tutorial3Pages = 3;
 var tutorialPages = 0;
 
 var pageId = null;
@@ -750,14 +750,16 @@ initTutorial = function(){
 
 function setPageID(){
 	this.pageId = d3.select("#module").selectAll("div")[0][0].getAttribute('id')
-	console.log('PAGE ID',this.pageId);
+	console.log(this.pageId);
 
-	if(pageId == "tutorial1"){
+	if(this.pageId == "tutorial1"){
 		tutorialPages = tutorial1Pages;
-	}else if(pageId == "tutorial2"){
+	}else if(this.pageId == "tutorial2"){
 		tutorialPages = tutorial2Pages;
-	}else{
+	}else if (this.pageId == "tutorial3"){
 		tutorialPages = tutorial3Pages;
+	}else{
+		console.log("whut")
 	}
 	
 }
@@ -789,10 +791,10 @@ function removePrevious(){
 	d3.selectAll("g.svg1")
 	.remove();
 
-	checkButton = d3.select("button.submitButton").remove()
-	
+	d3.select("button.submitButton").remove()
+	d3.select("div#catagoryButtonContainer").remove()
 	d3.select("svg#container")
-	.attr("height", "500")
+	.attr("height", 500)
 	.attr("width", 750);
 }
 
@@ -820,15 +822,16 @@ function checkKeyPressed(key) {
 	removePrevious()
 	setArrowDirection(step)
 	console.log('step', step)
-
+	console.log("introPages", introPages);
 	console.log('introPages + tutorialPages' , introPages + tutorialPages)
+	console.log('tutorial Pages', tutorialPages)
 	console.log('introPages', introPages)
 	console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
 	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
 		console.log('introduction')
-	}else if(step > introPages - 1 && step <introPages + tutorialPages){
+	}else if(step > introPages - 1 && step <=introPages + tutorialPages-1){
 
 		if(this.pageId == 'tutorial1'){
 			tutorial1(step-introPages)
@@ -841,7 +844,7 @@ function checkKeyPressed(key) {
 			console.log('tutorial3')
 		}
 		//the tutorial 
-	}else if(step >= introPages + tutorialPages && step <= introPages + tutorialPages + exitPages-1){
+	}else if(step >= introPages + tutorialPages  && step <= introPages + tutorialPages + exitPages-1){
 		//the exit 
 		exit(step - introPages - tutorialPages)
 	}else{
@@ -909,7 +912,8 @@ function introduction(i){
 	console.log(i)
 	switch(i){
 
-		case 0||1:
+		case 0:
+		case 1:
 
 		var fileName = "data/file"+i+".tsv";
 		var modelName = "data"+i;
@@ -1231,7 +1235,7 @@ function tutorial2(i){
 		.attr("y",440);
 
 		svg.append("text")
-		.text("After choosing a section you should highlight the anomoly with your mouse")
+		.text("After choosing a section, you should highlight the anomoly with your mouse")
 		.attr("x",550)
 		.attr("y",480);
 		break;
@@ -1239,24 +1243,13 @@ function tutorial2(i){
 		d3.select("svg#container")
 		.attr("height",450)
 		.attr("width", 1000);
-		
+
 		d3.select("div#tutorial2")
 		.append("button")
 		.text('submit')
 		.attr('class', 'submitButton')
 		.attr('name','researchButton')
-		.on("click", function(){
-			d3.selectAll(".brush").remove();
-
-
-			svg2.append("g")
-			.attr("class","brush")
-			.call(brush)
-			.selectAll("rect")
-			.attr("height",theight-75);
-
-			d3.select(".brush").call(brush.clear());
-		});
+		.on("click", clean)
 
 
 		createTwoPaneExample("tutorial2")
@@ -1485,10 +1478,59 @@ function createTwoPaneExample(className){
 }
 
 function tutorial3(i){
+	console.log("tutorial3", i)
 	switch(i){
 		case 0:
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
+
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/tutorial3.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+		svg.append("text")
+		.text("You must focus on a section of the chart using the Enter Button ")
+		.attr("x",550)
+		.attr("y",400);
+
+		svg.append("text")
+		.text("and it will disply on the left pane")
+		.attr("x",550)
+		.attr("y",440);
+
+		svg.append("text")
+		.text("After choosing a section, you should highlight the anomoly with your mouse")
+		.attr("x",550)
+		.attr("y",480);
 		break;
-		case 1:
+		case 1: 
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
+
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/tutorial3.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+		svg.append("text")
+		.text("You then must choose the anomaly type: ")
+		.attr("x",550)
+		.attr("y",400);
+
+		svg.append("text")
+		.text("a compressed, spiked, or stretched anomaly")
+		.attr("x",550)
+		.attr("y",440);
+		break;
+		case 2:
+
 		var mainContainer =	 d3.select('div#tutorial3')
 		.append("div")
 		.attr('id', "catagoryButtonContainer");
@@ -1497,24 +1539,42 @@ function tutorial3(i){
 		.append('button')
 		.text('Stretched Anomaly')
 		.attr("class", "catagoryButtons")
-		.attr('name', 'stretch');
+		.attr('name', 'stretch')
+		.on("click", clean);
 
 		var compressedButton = mainContainer
 		.append('button')
 		.text('Compressed Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'compress');
+		.attr('name', 'compress')
+		.on("click", clean);
 
 		var spikeButton  = mainContainer
 		.append('button')
 		.text('Spike Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'spike');
+		.attr('name', 'spike')
+		.on("click", clean);
 		createTwoPaneExample();
+
+		d3.select("svg#container")
+		.attr("height", 425);
 		break;
 	}
-
 }
+
+function clean(){
+			d3.selectAll(".brush").remove();
+
+
+			svg2.append("g")
+			.attr("class","brush")
+			.call(brush)
+			.selectAll("rect")
+			.attr("height",theight-75);
+
+			d3.select(".brush").call(brush.clear());
+	}
 
 
 },{"../conditions/conditionComponents":2,"../conditions/general":1}]},{},[3]);
