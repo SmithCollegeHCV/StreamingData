@@ -720,7 +720,7 @@ var introPages = 6;
 var exitPages = 1;
 var tutorial1Pages = 0;
 var tutorial2Pages = 2;
-var tutorial3Pages = 2;
+var tutorial3Pages = 3;
 var tutorialPages = 0;
 
 var pageId = null;
@@ -789,10 +789,10 @@ function removePrevious(){
 	d3.selectAll("g.svg1")
 	.remove();
 
-	checkButton = d3.select("button.submitButton").remove()
-	
+	d3.select("button.submitButton").remove()
+	d3.select("div#catagoryButtonContainer").remove()
 	d3.select("svg#container")
-	.attr("height", "500")
+	.attr("height", 500)
 	.attr("width", 750);
 }
 
@@ -1485,6 +1485,7 @@ function createTwoPaneExample(className){
 }
 
 function tutorial3(i){
+	console.log("tutorial3", i)
 	switch(i){
 		case 0:
 		d3.select("svg#container")
@@ -1513,7 +1514,7 @@ function tutorial3(i){
 		.attr("x",550)
 		.attr("y",480);
 		break;
-		case 2: 
+		case 1: 
 		d3.select("svg#container")
 		.attr("height",450)
 		.attr("width", 1000);
@@ -1526,7 +1527,7 @@ function tutorial3(i){
 		.attr("y",0);
 
 		svg.append("text")
-		.text("You then must choose the type of anomaly that it is: ")
+		.text("You then must choose the anomaly type: ")
 		.attr("x",550)
 		.attr("y",400);
 
@@ -1534,10 +1535,9 @@ function tutorial3(i){
 		.text("a compressed, spiked, or stretched anomaly")
 		.attr("x",550)
 		.attr("y",440);
-
-
 		break;
-		case 3:
+		case 2:
+
 		var mainContainer =	 d3.select('div#tutorial3')
 		.append("div")
 		.attr('id', "catagoryButtonContainer");
@@ -1560,6 +1560,9 @@ function tutorial3(i){
 		.attr('class', 'catagoryButtons')
 		.attr('name', 'spike');
 		createTwoPaneExample();
+
+		d3.select("svg#container")
+		.attr("height", 425);
 		break;
 	}
 
