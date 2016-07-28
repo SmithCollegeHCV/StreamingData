@@ -63,10 +63,13 @@ svg {
 	fill:none;
 	stroke:black;
 	shape-rendering: crispEdges;
-
 }
-.catagoryButtons{
-  position: relative;
+
+p{
+	font-family: verdana;
+	font-size: 20px;
+	text-align:center;
+}
 
 .content{
 	width:800;
@@ -85,7 +88,7 @@ svg {
   top: 750px;
   left: 1050px;
   height: 35px;
-  margin: 10px;
+  width: 75px;
   background-color: #4CAF50;
   border-radius: 8px;
   color: white;
@@ -93,7 +96,6 @@ svg {
   font-size: 16px;
   cursor: pointer;
   outline:none;
-  float:left;
 }
 .submitButton:hover{
   background-color: #3e8e41;
@@ -103,10 +105,6 @@ svg {
   transform: translateY(4px);
 }
 
-p{
-	font-family: verdana;
-	font-size: 20px;
-	text-align:center;
 
 .line{
 	fill: none;
