@@ -60,6 +60,13 @@ initTutorial = function(){
 	Mousetrap.bind('left', function(e, n) { checkKeyPressed(n); });
 	Mousetrap.bind('right',function(e, n) { checkKeyPressed(n); });
 
+	d3.select("#control").append('button')
+    .attr('type', 'button')
+    .attr('id', 'next-button')
+    .attr('disabled', true)
+    .text('Next')
+    .on('click', experimentr.next);
+
 	if(this.pageId =="tutorial2" || this.pageId =="tutorial3"){
 		Mousetrap.bind('enter', function(e,n){  addCopy(); });
 	}
@@ -109,12 +116,10 @@ function removePrevious(){
 	d3.selectAll("g.svg1")
 	.remove();
 
-	d3.selectAll("button")
-	.attr('name', function(d){ return 'name' == "researchButton"; })
-	.remove()
-
-
+	checkButton = d3.select("button.submitButton").remove()
+	
 	d3.select("svg#container")
+	.attr("height", "500")
 	.attr("width", 750);
 }
 
@@ -476,6 +481,8 @@ function exit(i){
 	.attr("x",360)
 	.attr("y",110);
 
+	d3.select("svg#container").attr("height", "150");
+
 	validate();
 	experimentr.showNext();
 	experimentr.release();	
@@ -530,7 +537,9 @@ function tutorial2(i){
 	switch(i){
 		case 0: 
 		d3.select("svg#container")
+		.attr("height",450)
 		.attr("width", 1000);
+
 		svg.append("image")
 		.attr("xlink:href", "modules/tutorial/TwoViewer.png")
 		.attr("width", 720)
@@ -554,6 +563,10 @@ function tutorial2(i){
 		.attr("y",480);
 		break;
 		case 1: 
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
+		
 		d3.select("div#tutorial2")
 		.append("button")
 		.text('submit')
