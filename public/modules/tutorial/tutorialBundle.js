@@ -750,14 +750,16 @@ initTutorial = function(){
 
 function setPageID(){
 	this.pageId = d3.select("#module").selectAll("div")[0][0].getAttribute('id')
-	console.log('PAGE ID',this.pageId);
+	console.log(this.pageId);
 
-	if(pageId == "tutorial1"){
+	if(this.pageId == "tutorial1"){
 		tutorialPages = tutorial1Pages;
-	}else if(pageId == "tutorial2"){
+	}else if(this.pageId == "tutorial2"){
 		tutorialPages = tutorial2Pages;
-	}else{
+	}else if (this.pageId == "tutorial3"){
 		tutorialPages = tutorial3Pages;
+	}else{
+		console.log("whut")
 	}
 	
 }
@@ -820,15 +822,16 @@ function checkKeyPressed(key) {
 	removePrevious()
 	setArrowDirection(step)
 	console.log('step', step)
-
+	console.log("introPages", introPages);
 	console.log('introPages + tutorialPages' , introPages + tutorialPages)
+	console.log('tutorial Pages', tutorialPages)
 	console.log('introPages', introPages)
 	console.log('introPages + tutorialPages + exitPages',introPages + tutorialPages + exitPages)
 	
 	if(step >= 0 && step <= introPages - 1){
 		introduction(step)
 		console.log('introduction')
-	}else if(step > introPages - 1 && step <introPages + tutorialPages){
+	}else if(step > introPages - 1 && step <=introPages + tutorialPages-1){
 
 		if(this.pageId == 'tutorial1'){
 			tutorial1(step-introPages)
@@ -841,7 +844,7 @@ function checkKeyPressed(key) {
 			console.log('tutorial3')
 		}
 		//the tutorial 
-	}else if(step >= introPages + tutorialPages && step <= introPages + tutorialPages + exitPages-1){
+	}else if(step >= introPages + tutorialPages  && step <= introPages + tutorialPages + exitPages-1){
 		//the exit 
 		exit(step - introPages - tutorialPages)
 	}else{
@@ -1557,10 +1560,9 @@ function tutorial3(i){
 		.attr("height", 425);
 		break;
 	}
+}
 
-
-	function clean(){
-
+function clean(){
 			d3.selectAll(".brush").remove();
 
 
@@ -1572,8 +1574,6 @@ function tutorial3(i){
 
 			d3.select(".brush").call(brush.clear());
 	}
-
-}
 
 
 },{"../conditions/conditionComponents":2,"../conditions/general":1}]},{},[3]);
