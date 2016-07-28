@@ -733,18 +733,11 @@ initTutorial = function(){
 	Mousetrap.bind('left', function(e, n) { checkKeyPressed(n); });
 	Mousetrap.bind('right',function(e, n) { checkKeyPressed(n); });
 
-	d3.select("#control").append('button')
-    .attr('type', 'button')
-    .attr('id', 'next-button')
-    .attr('disabled', true)
-    .text('Next')
-    .on('click', experimentr.next);
+if(this.pageId =="tutorial2" || this.pageId =="tutorial3"){
+	Mousetrap.bind('enter', function(e,n){  addCopy(); });
+}
 
-	if(this.pageId =="tutorial2" || this.pageId =="tutorial3"){
-		Mousetrap.bind('enter', function(e,n){  addCopy(); });
-	}
-
-	experimentr.hideNext();
+experimentr.hideNext();
 
 }()
 
@@ -860,52 +853,52 @@ function validate() {
 
 function addCopy(){
 	if(!d3.select("g.svg2").empty()){
-	var linesOnDisplay = d3.selectAll("#lineCopy");
-	linesOnDisplay.remove();
+		var linesOnDisplay = d3.selectAll("#lineCopy");
+		linesOnDisplay.remove();
 
 
-	lines = new general.getPoints();
-	points1 = lines.points1;
-	points2 = lines.points2;
-	points3 = lines.points3;
-	var copy1  = d3.svg.line()
-	.x(function(d,i){return tx(i);})
-	.y(function(d){ return  ty1(parseFloat(d));})
-	.interpolate("basis");
+		lines = new general.getPoints();
+		points1 = lines.points1;
+		points2 = lines.points2;
+		points3 = lines.points3;
+		var copy1  = d3.svg.line()
+		.x(function(d,i){return tx(i);})
+		.y(function(d){ return  ty1(parseFloat(d));})
+		.interpolate("basis");
 
-	var copy2 = d3.svg.line()
-	.x(function(d,i){return tx(i);})
-	.y(function(d){ return  ty2(parseFloat(d));})
-	.interpolate("basis");
+		var copy2 = d3.svg.line()
+		.x(function(d,i){return tx(i);})
+		.y(function(d){ return  ty2(parseFloat(d));})
+		.interpolate("basis");
 
-	var copy3 = d3.svg.line()
-	.x(function(d,i){return tx(i);})
-	.y(function(d){ return  ty3(parseFloat(d));})
-	.interpolate("basis");
+		var copy3 = d3.svg.line()
+		.x(function(d,i){return tx(i);})
+		.y(function(d){ return  ty3(parseFloat(d));})
+		.interpolate("basis");
 
-	var copyPath1 =svg2.append("g")
-	.attr("clip-path","url(#clip)")
-	.append("path")
-	.datum(points1)
-	.attr("class","line1 copy1")
-	.attr("id","lineCopy")
-	.attr("d",copy1);
-	var copyPath2 = svg2.append("g")
-	.attr("clip-path","url(#clip)")
-	.append("path")
-	.datum(points2)
-	.attr("class","line2 copy2")
-	.attr("id","lineCopy")
-	.attr("d",copy2);
+		var copyPath1 =svg2.append("g")
+		.attr("clip-path","url(#clip)")
+		.append("path")
+		.datum(points1)
+		.attr("class","line1 copy1")
+		.attr("id","lineCopy")
+		.attr("d",copy1);
+		var copyPath2 = svg2.append("g")
+		.attr("clip-path","url(#clip)")
+		.append("path")
+		.datum(points2)
+		.attr("class","line2 copy2")
+		.attr("id","lineCopy")
+		.attr("d",copy2);
 
-	var copyPath3= svg2.append("g")
-	.attr("clip-path","url(#clip)")
-	.append("path")
-	.datum(points3)
-	.attr("class","line3 copy3")
-	.attr("id","lineCopy")
-	.attr("d",copy3);
-}
+		var copyPath3= svg2.append("g")
+		.attr("clip-path","url(#clip)")
+		.append("path")
+		.datum(points3)
+		.attr("class","line3 copy3")
+		.attr("id","lineCopy")
+		.attr("d",copy3);
+	}
 }
 
 function introduction(i){
@@ -1564,17 +1557,17 @@ function tutorial3(i){
 }
 
 function clean(){
-			d3.selectAll(".brush").remove();
+	d3.selectAll(".brush").remove();
 
 
-			svg2.append("g")
-			.attr("class","brush")
-			.call(brush)
-			.selectAll("rect")
-			.attr("height",theight-75);
+	svg2.append("g")
+	.attr("class","brush")
+	.call(brush)
+	.selectAll("rect")
+	.attr("height",theight-75);
 
-			d3.select(".brush").call(brush.clear());
-	}
+	d3.select(".brush").call(brush.clear());
+}
 
 
 },{"../conditions/conditionComponents":2,"../conditions/general":1}]},{},[3]);
