@@ -239,7 +239,8 @@ function introduction(i){
 	console.log(i)
 	switch(i){
 
-		case 0||1:
+		case 0:
+		case 1:
 
 		var fileName = "data/file"+i+".tsv";
 		var modelName = "data"+i;
