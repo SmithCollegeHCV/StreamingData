@@ -182,7 +182,7 @@ module.exports = {
 				disData1.push(data1.slice(0,1)[0]);
 				data1.splice(0,1);
 
-				if(d3.select('#countdown').html() == "countdown's over!"){
+				if((!d3.select('#countdown').empty()) && d3.select('#countdown').html() == "countdown's over!"){
 					data1=[];
 				}
 

@@ -545,19 +545,31 @@ function tutorial2(i){
 			.attr("y",480);
 		break;
 		case 1: 
-			createTwoPaneExample("tutorial2")
 			d3.select("div#tutorial2")
 			.append("button")
 			.text('submit')
 			.attr('class', 'submitButton')
 			.attr('name','researchButton')
 			.on("click", function(){
-				d3.selectAll(".brush").remove();
+			d3.selectAll(".brush").remove();
+
+
+			svg2.append("g")
+			.attr("class","brush")
+			.call(brush)
+			.selectAll("rect")
+			.attr("height",theight-75);
+
+			d3.select(".brush").call(brush.clear());
+			});
+
+
+			createTwoPaneExample("tutorial2")
 		break;		
 	}
 }
 
-function createTwoPaneExample(){
+function createTwoPaneExample(className){
 	d3.select("svg#container")
 	.attr("width", 1500);
 	
@@ -775,49 +787,39 @@ function createTwoPaneExample(){
 			};
 
 		};
-
-		svg2.append("g")
-		.attr("class","brush")
-		.call(brush)
-		.selectAll("rect")
-		.attr("height",theight-75);
-
-		d3.select(".brush").call(brush.clear());
-	});
-
 	
 }
 
 function tutorial3(i){
 	switch(i){
 		case 0:
+		break;
+		case 1:
+			var mainContainer =	 d3.select('div#tutorial3')
+			.append("div")
+			.attr('id', "catagoryButtonContainer");
 
-		case 1: 
-		createTwoPaneExample()
+			var stretchButton = mainContainer
+				.append('button')
+				.text('Stretched Anomaly')
+				.attr("class", "catagoryButtons")
+				.attr('name', 'stretch');
 
-	var mainContainer =	 d3.select('div#tutorial3')
-	.append("div")
-	.attr('id', "catagoryButtonContainer");
+			var compressedButton = mainContainer
+				.append('button')
+				.text('Compressed Anomaly')
+				.attr('class', 'catagoryButtons')
+				.attr('name', 'compress');
 
-	var stretchButton = mainContainer
-		.append('button')
-		.text('Stretched Anomaly')
-		.attr("class", "catagoryButtons")
-		.attr('name', 'stretch');
-
-	var compressedButton = mainContainer
-		.append('button')
-		.text('Compressed Anomaly')
-		.attr('class', 'catagoryButtons')
-		.attr('name', 'compress');
-
-	var spikeButton  = mainContainer
-		.append('button')
-		.text('Spike Anomaly')
-		.attr('class', 'catagoryButtons')
-		.attr('name', 'spike');
-}
+			var spikeButton  = mainContainer
+				.append('button')
+				.text('Spike Anomaly')
+				.attr('class', 'catagoryButtons')
+				.attr('name', 'spike');
+			createTwoPaneExample();
+		break;
 	}
+
 }
 
 function setup(){
