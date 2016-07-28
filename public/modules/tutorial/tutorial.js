@@ -558,7 +558,7 @@ function tutorial2(i){
 		.attr("y",440);
 
 		svg.append("text")
-		.text("After choosing a section you should highlight the anomoly with your mouse")
+		.text("After choosing a section, you should highlight the anomoly with your mouse")
 		.attr("x",550)
 		.attr("y",480);
 		break;
@@ -566,7 +566,7 @@ function tutorial2(i){
 		d3.select("svg#container")
 		.attr("height",450)
 		.attr("width", 1000);
-		
+
 		d3.select("div#tutorial2")
 		.append("button")
 		.text('submit')
@@ -814,8 +814,57 @@ function createTwoPaneExample(className){
 function tutorial3(i){
 	switch(i){
 		case 0:
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
+
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/tutorial3.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+		svg.append("text")
+		.text("You must focus on a section of the chart using the Enter Button ")
+		.attr("x",550)
+		.attr("y",400);
+
+		svg.append("text")
+		.text("and it will disply on the left pane")
+		.attr("x",550)
+		.attr("y",440);
+
+		svg.append("text")
+		.text("After choosing a section, you should highlight the anomoly with your mouse")
+		.attr("x",550)
+		.attr("y",480);
 		break;
-		case 1:
+		case 2: 
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
+
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/tutorial3.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+		svg.append("text")
+		.text("You then must choose the type of anomaly that it is: ")
+		.attr("x",550)
+		.attr("y",400);
+
+		svg.append("text")
+		.text("a compressed, spiked, or stretched anomaly")
+		.attr("x",550)
+		.attr("y",440);
+
+
+		break;
+		case 3:
 		var mainContainer =	 d3.select('div#tutorial3')
 		.append("div")
 		.attr('id', "catagoryButtonContainer");
