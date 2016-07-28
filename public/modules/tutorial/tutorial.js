@@ -105,7 +105,8 @@ function removePrevious(){
 	.remove();
 
 	d3.selectAll("button")
-	.remove();
+	.attr('name', function(d){ return 'name' == "researchButton"; })
+	.remove()
 
 
 	d3.select("svg#container")
@@ -452,6 +453,7 @@ function introduction(i){
 }
 
 function exit(i){
+
 			svg.append("text")
 			.style("font-weight", "bold")
 			.text("This completes the tutorial.")
@@ -468,6 +470,7 @@ function exit(i){
 			.attr("x",360)
 			.attr("y",110);
 
+			validate();
 			experimentr.showNext();
 			experimentr.release();	
 }
@@ -832,7 +835,7 @@ function setup(){
 	svg.selectAll("image")
 	.remove();
 	d3.select("svg#container").attr("height", 450);
-	experimentr.hideNext();
+	// experimentr.hideNext();
 
 }
 
