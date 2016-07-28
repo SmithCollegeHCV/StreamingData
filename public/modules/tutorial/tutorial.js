@@ -572,18 +572,7 @@ function tutorial2(i){
 		.text('submit')
 		.attr('class', 'submitButton')
 		.attr('name','researchButton')
-		.on("click", function(){
-			d3.selectAll(".brush").remove();
-
-
-			svg2.append("g")
-			.attr("class","brush")
-			.call(brush)
-			.selectAll("rect")
-			.attr("height",theight-75);
-
-			d3.select(".brush").call(brush.clear());
-		});
+		.on("click", clean)
 
 
 		createTwoPaneExample("tutorial2")
@@ -873,24 +862,42 @@ function tutorial3(i){
 		.append('button')
 		.text('Stretched Anomaly')
 		.attr("class", "catagoryButtons")
-		.attr('name', 'stretch');
+		.attr('name', 'stretch')
+		.on("click", clean);
 
 		var compressedButton = mainContainer
 		.append('button')
 		.text('Compressed Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'compress');
+		.attr('name', 'compress')
+		.on("click", clean);
 
 		var spikeButton  = mainContainer
 		.append('button')
 		.text('Spike Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'spike');
+		.attr('name', 'spike')
+		.on("click", clean);
 		createTwoPaneExample();
 
 		d3.select("svg#container")
 		.attr("height", 425);
 		break;
+	}
+
+
+	function clean(){
+
+			d3.selectAll(".brush").remove();
+
+
+			svg2.append("g")
+			.attr("class","brush")
+			.call(brush)
+			.selectAll("rect")
+			.attr("height",theight-75);
+
+			d3.select(".brush").call(brush.clear());
 	}
 
 }
