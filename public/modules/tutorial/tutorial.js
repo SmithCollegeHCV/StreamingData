@@ -46,7 +46,7 @@ d3.select(".content").attr("align","center");
 var introPages = 6;
 var exitPages = 1;
 var tutorial1Pages = 0;
-var tutorial2Pages = 2;
+var tutorial2Pages = 3;
 var tutorial3Pages = 3;
 var tutorialPages = 0;
 
@@ -530,272 +530,80 @@ function tutorial1(i){
 
 function tutorial2(i){
 	
-	console.log('tutorial2 step ', i )
-	switch(i){
-		case 0: 
+		switch(i){
+		case 0:
 		d3.select("svg#container")
 		.attr("height",450)
 		.attr("width", 1000);
 
 		svg.append("image")
-		.attr("xlink:href", "modules/tutorial/TwoViewer.png")
+		.attr("xlink:href", "modules/tutorial/d2-tutorial-1.png")
 		.attr("width", 720)
 		.attr("height", 400)
 		.attr("x",200)
 		.attr("y",0);
 
 		svg.append("text")
-		.text("You must focus on a section of the chart using the Enter Button ")
+		.text("Streaming data will appear on the left side of the screen. ")
 		.attr("x",550)
-		.attr("y",400);
-
-		svg.append("text")
-		.text("and it will disply on the left pane")
-		.attr("x",550)
-		.attr("y",440);
-
-		svg.append("text")
-		.text("After choosing a section, you should highlight the anomoly with your mouse")
-		.attr("x",550)
-		.attr("y",480);
+		.attr("y",360);
 		break;
 		case 1: 
 		d3.select("svg#container")
 		.attr("height",450)
 		.attr("width", 1000);
 
-		d3.select("div#tutorial2")
-		.append("button")
-		.text('submit')
-		.attr('class', 'submitButton')
-		.attr('name','researchButton')
-		.on("click", clean)
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/d2-tutorial-2.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+		svg.append("text")
+		.text("Whenever you see an ANOMALY (shrinking, stretching or odd-looking value),")
+		.attr("x",550)
+		.attr("y",360);
+
+		svg.append("text")
+		.text("press the ENTER key to capture a screenshot.")
+		.attr("x",550)
+		.attr("y",400);
+
+		svg.append("text")
+		.text("This will appear on the right")
+		.attr("x",550)
+		.attr("y",440);
+		break;
+		case 2:
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
 
 
-		createTwoPaneExample("tutorial2")
-		break;		
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/d2-tutorial-3.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+
+		svg.append("text")
+		.text("Use your mouse to highlight the part of the screenshot where the ANOMALY appears,")
+		.attr("x",550)
+		.attr("y",360);
+
+		svg.append("text")
+		.text("then click the \"Submit\" button.")
+		.attr("x",550)
+		.attr("y",400);
+
+		break;
 	}
 }
 
-function createTwoPaneExample(className){
-	d3.select("svg#container")
-	.attr("width", 1500);
-	
 
-	var svgContainer = d3.select("svg#container");
-
-	var xAxis=d3.svg.axis().scale(x).orient("bottom");
-
-	svg1 = svgContainer.append("g")
-	.attr("class","svg1")
-	.attr("transform", "translate(" +50+ "," + 20 + ")");
-
-	svg1.append("g")
-	.attr("class","x axis")
-	.attr("transform","translate(0," + ty1(0)+")")
-	.call(xAxis);
-
-	svg1.append("defs").append("clipPath")
-	.attr("id","clip")
-	.append("rect")
-	.attr("width",twidth)
-	.attr("height",theight+500);
-
-	svg1.append("defs").append("clipPath")
-	.attr("id","clip2")
-	.append("rect")
-	.attr("transform","translate(0,0)")
-	.attr("width",twidth)
-	.attr("height",theight+500);
-
-	svg1.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + ty2(0) + ")")
-	.call(xAxis);
-
-	svg1.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + ty3(0) + ")")
-	.call(xAxis);
-
-	var borderPath = svg1.append("rect")
-	.attr("class","border")
-	.attr("x",0)
-	.attr("y",0)
-	.attr("width",twidth)
-	.attr("height",theight-75)
-	.style("stroke","#A4A4A4")
-	.style("fill","none")
-	.style("stroke-width",3)
-	.attr("rx",20)
-	.attr("ry",20);
-
-
-
-	svg2 = svgContainer.append("g")
-	.attr("class","svg2")
-	.attr("transform", "translate(" +650+ "," + 20 + ")");
-	
-	svg2.append("g")
-	.attr("class","x axis")
-	.attr("transform","translate(0," + ty(0)+")")
-	.call(xAxis);
-
-	svg2.append("defs").append("clipPath")
-	.attr("id","clip")
-	.append("rect")
-	.attr("width",twidth)
-	.attr("height",theight+500);
-
-	svg2.append("defs").append("clipPath")
-	.attr("id","clip2")
-	.append("rect")
-	.attr("transform","translate(0,0)")
-	.attr("width",twidth)
-	.attr("height",theight+500);
-
-	svg2.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + ty2(0) + ")")
-	.call(xAxis);
-
-	svg2.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + ty3(0) + ")")
-	.call(xAxis);
-
-	var borderPath = svg2.append("rect")
-	.attr("class","border")
-	.attr("x",0)
-	.attr("y",0)
-	.attr("width",twidth)
-	.attr("height",theight-75)
-	.style("stroke","#A4A4A4")
-	.style("fill","none")
-	.style("stroke-width",3)
-	.attr("rx",20)
-	.attr("ry",20);
-	
-	brush = d3.svg.brush()
-	.x(x)
-	.on("brushend",brushed);
-
-	svg2.append("g")
-	.attr("class","brush")
-	.call(brush)
-	.selectAll("rect")
-	.attr("height",theight-75);
-
-
-	function brushed () {
-		var extent = brush.extent();
-		var min = Math.round(extent[0]);
-		var max = Math.round(extent[1]);
-	}
-
-	
-	var q = d3.queue();
-	q.defer(d3.tsv, "data/slow1.tsv")
-	q.defer(d3.tsv, "data/slow2.tsv")
-	q.defer(d3.tsv, "data/slow3.tsv")
-	.await(setUp); 
-
-
-	function setUp(error, data1, data2, data3){
-		if (error) throw error;
-
-
-		var disData1 = data1.slice(0,80);
-		var disData2 = data2.slice(0,80);
-		var disData3 = data3.slice(0,80);
-
-
-		var line1  = d3.svg.line()
-		.x(function(d,i){return tx(i);})
-		.y(function(d){ return  ty1(parseFloat(d.value));})
-		.interpolate("basis");
-
-		var line2 = d3.svg.line()
-		.x(function(d,i){return tx(i);})
-		.y(function(d){ return  ty2(parseFloat(d.value));})
-		.interpolate("basis");
-
-		var line3 = d3.svg.line()
-		.x(function(d,i){return tx(i);})
-		.y(function(d){ return  ty3(parseFloat(d.value));})
-		.interpolate("basis");
-
-		var path1 =svg1.append("g")
-		.attr("clip-path","url(#clip)")
-		.append("path")
-		.datum(disData1)
-		.attr("class","line1")
-		.attr("id","line")
-		.attr("d",line1);
-
-		var path2 = svg1.append("g")
-		.attr("clip-path","url(#clip)")
-		.append("path")
-		.datum(disData2)
-		.attr("class","line2")
-		.attr("id","line")
-		.attr("d",line2);
-
-		var path3= svg1.append("g")
-		.attr("clip-path","url(#clip)")
-		.append("path")
-		.datum(disData3)
-		.attr("class","line3")
-		.attr("id","line")
-		.attr("d",line3);
-
-
-		tick();
-
-		function tick(){
-
-
-			disData1.push(data1.slice(0,1)[0]);
-			data1.splice(0,1);
-
-			path1
-			.attr("d",line1)
-			.attr("transform",null)
-			.transition()
-			.duration(100)
-			.ease("linear")
-			.attr("transform", "translate(" + tx(-1) + ",0)")
-			disData1.shift();
-
-			disData2.push(data2.slice(0,1)[0]);
-			data2.splice(0,1);
-			path2
-			.attr("d",line2)
-			.attr("transform",null)
-			.transition()
-			.duration(100)
-			.ease("linear")
-			.attr("transform", "translate(" + tx(-1) + ",0)")
-			disData2.shift();
-
-			disData3.push(data3.slice(0,1)[0]);;
-			data3.splice(0,1);
-			path3
-			.attr("d",line3)
-			.attr("transform",null)
-			.transition()
-			.duration(100)
-			.ease("linear")
-			.attr("transform", "translate(" + tx(-1) + ",0)")
-			.each("end",tick);
-			disData3.shift();
-
-
-		};
-
-	};
-	
-}
 
 function tutorial3(i){
 	console.log("tutorial3", i)
@@ -882,17 +690,3 @@ function tutorial3(i){
 		break;
 	}
 }
-
-function clean(){
-	d3.selectAll(".brush").remove();
-
-
-	svg2.append("g")
-	.attr("class","brush")
-	.call(brush)
-	.selectAll("rect")
-	.attr("height",theight-75);
-
-	d3.select(".brush").call(brush.clear());
-}
-
