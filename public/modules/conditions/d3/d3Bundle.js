@@ -365,7 +365,7 @@ module.exports = {
 		.attr("width", 1500)
 		.attr("height", 500);
 
-		var xAxis=d3.svg.axis().scale(x).orient("bottom");
+		var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 
 		svg1 = svgContainer.append("g")
 		.attr("class","svg1")
@@ -550,7 +550,7 @@ createCopyViewer:function(className){
 		.x(x)
 		.on("brushend",component.brushed);
 
-	var xAxis=d3.svg.axis().scale(x).orient("bottom");
+	var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 	
 	var svgContainer = d3.select("svg")
 	
