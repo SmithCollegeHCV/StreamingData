@@ -306,19 +306,22 @@ addCatagoryButtons: function(className){
 		.append('button')
 		.text('Stretched Anomaly')
 		.attr("class", "catagoryButtons")
-		.attr('name', 'stretch');
+		.attr('name', 'stretch')
+		.attr('value', 'off');
 
 	var compressedButton = mainContainer
 		.append('button')
 		.text('Compressed Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'compress');
+		.attr('name', 'compress')
+		.attr('value', 'off');
 
 	var spikeButton  = mainContainer
 		.append('button')
 		.text('Spike Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'spike');
+		.attr('name', 'spike')
+		.attr('value', 'off');
 },
 /** creates brush component for user graph analysis
 *@memberof ComponentsModule

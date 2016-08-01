@@ -71,6 +71,11 @@ svg {
   float:left;
 }
 
+.catagoryButtons[value=on]{
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
 .catagoryButtons:active{
   background-color: #3e8e41;
   transform: translateY(4px);
