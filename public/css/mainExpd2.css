@@ -71,6 +71,16 @@ svg {
   float:left;
 }
 
+.catagoryButtons:active{
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.catagoryButtons:hover{
+  background-color: #3e8e41;
+}
+
+
 div#catagoryButtonContainer{
     position: absolute;
     left: 57%;

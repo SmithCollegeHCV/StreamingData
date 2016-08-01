@@ -191,7 +191,7 @@ module.exports = {
 			var currentAnoms=[]
 			if (allNoise.includes("T")){
 				currentAnoms =  lines.anoms.filter(function(n){ return n != 0 }); 
-				console.log("currently anomoly" + currentAnoms)
+				// console.log("currently anomoly" + currentAnoms)
 			}
 			var areAnomsPresent = [allNoise.includes("T"), currentAnoms]
 			return areAnomsPresent
@@ -495,7 +495,7 @@ module.exports = {
 				disData1.push(data1.slice(0,1)[0]);
 				data1.splice(0,1);
 
-				if(d3.select('#countdown').html() == "countdown's over!"){
+				if((!d3.select('#countdown').empty()) && d3.select('#countdown').html() == "countdown's over!"){
 					data1=[];
 				}
 
@@ -711,6 +711,7 @@ init = function(){
 		component.createGraphViewer(className);
 		component.createCopyViewer(className);
 		component.addCatagoryButtons(className);
+		component.addSubmitButton(className);
     	component.addGraph(className, path1, path2, path3,duration);
 	};
 
