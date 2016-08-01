@@ -590,7 +590,8 @@ createCopyViewer:function(className){
 
 	brush = d3.svg.brush()
 		.x(x)
-		.on("brushend",component.brushed);
+		.on("brushend",component.brushed)
+		.on("brush", component.boundedBrushmove(1, 25));
 
 	var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 	
@@ -704,6 +705,23 @@ brushed:function(){
 		selectedPoints = lines.noise1.slice(min,max).concat(lines.noise2.slice(min,max)).concat(lines.noise3.slice(min,max));
 		// console.log('in create components: selected Points = ',selectedPoints);
 	}
+},
+
+
+boundedBrushmove:function ( min, max) {
+  return function(){
+    var extent = brush.extent(),
+      diff = extent[1] - extent[0];
+    
+    if(min && (diff < min)) {
+      extent[1] = extent[0] + min;
+    }else if(max && (diff > max)){
+      extent[1] = extent[0] + max;
+    }else{
+      return;
+    }
+    brush.extent(extent)(d3.select(this));
+  }
 },
 
 /** a getter method for the selected points from brush for the General module
