@@ -69,7 +69,7 @@ module.exports = {
 			general.addCopy();
 			component.addBrush();
 			buttonArray = [];
-			
+
 			submitButton = d3.select(".submitButton")
 				.on("mousedown", function() {
 					buttonArray.push("submit")
@@ -77,7 +77,8 @@ module.exports = {
 					if (!d3.select("div#catagoryButtonContainer").empty()) {
 						onButtons = d3.selectAll("button.catagoryButtons[value='on']");
 						onButtons.each(function() {
-							buttonArray.push(d3.select(this).attr("name"))
+							buttonArray.push(d3.select(this).attr("name"));
+							d3.select(this).attr("value", "off");
 						})
 					}
 					general.feedBack(buttonArray, "button");
