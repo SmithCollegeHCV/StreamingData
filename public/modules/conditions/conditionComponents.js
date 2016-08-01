@@ -52,7 +52,7 @@ module.exports = {
 		.attr("width", 1500)
 		.attr("height", 500);
 
-		var xAxis=d3.svg.axis().scale(x).orient("bottom");
+		var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 
 		svg1 = svgContainer.append("g")
 		.attr("class","svg1")
@@ -235,9 +235,10 @@ createCopyViewer:function(className){
 
 	brush = d3.svg.brush()
 		.x(x)
-		.on("brushend",component.brushed);
+		.on("brushend",component.brushed)
+		.on("brush", component.boundedBrushmove(1, 25));
 
-	var xAxis=d3.svg.axis().scale(x).orient("bottom");
+	var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 	
 	var svgContainer = d3.select("svg")
 	
@@ -306,19 +307,22 @@ addCatagoryButtons: function(className){
 		.append('button')
 		.text('Stretched Anomaly')
 		.attr("class", "catagoryButtons")
-		.attr('name', 'stretch');
+		.attr('name', 'stretch')
+		.attr('value', 'off');
 
 	var compressedButton = mainContainer
 		.append('button')
 		.text('Compressed Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'compress');
+		.attr('name', 'compress')
+		.attr('value', 'off');
 
 	var spikeButton  = mainContainer
 		.append('button')
 		.text('Spike Anomaly')
 		.attr('class', 'catagoryButtons')
-		.attr('name', 'spike');
+		.attr('name', 'spike')
+		.attr('value', 'off');
 },
 /** creates brush component for user graph analysis
 *@memberof ComponentsModule
@@ -346,6 +350,23 @@ brushed:function(){
 		selectedPoints = lines.noise1.slice(min,max).concat(lines.noise2.slice(min,max)).concat(lines.noise3.slice(min,max));
 		// console.log('in create components: selected Points = ',selectedPoints);
 	}
+},
+
+
+boundedBrushmove:function ( min, max) {
+  return function(){
+    var extent = brush.extent(),
+      diff = extent[1] - extent[0];
+    
+    if(min && (diff < min)) {
+      extent[1] = extent[0] + min;
+    }else if(max && (diff > max)){
+      extent[1] = extent[0] + max;
+    }else{
+      return;
+    }
+    brush.extent(extent)(d3.select(this));
+  }
 },
 
 /** a getter method for the selected points from brush for the General module
