@@ -17,6 +17,7 @@ var socket;
 exports.pageId;
 var interactionGroup = [];
 data = {};
+buttonArray = [];
 
 module.exports = {
 	/** Test to see if the module is loaded
@@ -52,6 +53,33 @@ module.exports = {
 			.attr("rx", 20)
 			.attr("ry", 20);
 	},
+	addSubmitFunctionality: function(){
+		submitButton = d3.select(".submitButton")
+		.on("mousedown", function() {
+			buttonArray.push("submit")
+			d3.selectAll("#lineCopy").remove();
+			if (!d3.select("div#catagoryButtonContainer").empty()) {
+				onButtons = d3.selectAll("button.catagoryButtons[value='on']");
+				if(onButtons.empty() || brush.empty()){
+					general.launchWarning()
+				}else{
+					onButtons.each(function() {
+						buttonArray.push(d3.select(this).attr("name"));
+						d3.select(this).attr("value", "off");
+					})
+
+					general.feedBack(buttonArray, "button");
+					d3.select(".brush").call(brush.clear());
+
+				}
+			}else if (!brush.empty()) {
+				general.feedBack(buttonArray, "button");
+				d3.select(".brush").call(brush.clear());
+			}
+			
+
+		})
+	},
 	/** Sends interaction information to backend on button pressed 
 	 *@memberof generalModule
 	 *@function pressed
@@ -67,27 +95,7 @@ module.exports = {
 			linesOnDisplay.remove();
 			general.addCopy();
 			component.addBrush();
-			buttonArray = [];
-
-			submitButton = d3.select(".submitButton")
-				.on("mousedown", function() {
-					buttonArray.push("submit")
-					d3.selectAll("#lineCopy").remove();
-					if (!d3.select("div#catagoryButtonContainer").empty()) {
-						onButtons = d3.selectAll("button.catagoryButtons[value='on']");
-						if(onButtons.empty() && brush.empty()){
-							general.launchWarning()
-						}else{
-							onButtons.each(function() {
-								buttonArray.push(d3.select(this).attr("name"));
-								d3.select(this).attr("value", "off");
-							})
-						}
-					}
-					general.feedBack(buttonArray, "button");
-					d3.select(".brush").call(brush.clear());
-
-				})
+		
 			if (!d3.select("div#catagoryButtonContainer").empty()) {
 				catagoryButton = d3.selectAll(".catagoryButtons")
 					.on("mousedown", function() {
@@ -196,10 +204,6 @@ module.exports = {
 			lines = new general.getPoints();
 		}
 		allNoise = d3.select(".svg2")[0][0] == null ? lines.noise : selectedPoints;
-		if (lines.anoms) {
-
-
-		}
 		if (allNoise) {
 			var currentAnoms = []
 			if (allNoise.includes("T")) {
@@ -301,7 +305,7 @@ module.exports = {
 		warning.style('display', 'inline')
 		.style("opacity", 0.0)
 		.transition()
-		.duration(1000)
+		.duration(1200)
 		.style("opacity", 1.0)
 		.each("end",function(){
 			warning.style("opacity", 1.0)
