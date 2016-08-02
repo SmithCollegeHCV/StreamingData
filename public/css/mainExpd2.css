@@ -93,3 +93,7 @@ svg {
 .catagoryButtons:hover{
   background-color: #3e8e41;
 }
+
+div#warning{
+  display:none;
+}

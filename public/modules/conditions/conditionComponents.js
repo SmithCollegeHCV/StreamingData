@@ -352,7 +352,17 @@ brushed:function(){
 	}
 },
 
+setupWarning:function(className){
+	var warning = d3.select("#"+className).append("div").attr("id", "warning");
 
+	if(/d3.*/.test(className)){
+		warning.text("Please select section of graph and catagorize anomaly before submitting")
+
+	}else{
+		warning.text("Please select section of graph before submitting")
+	}
+
+},
 boundedBrushmove:function ( min, max) {
   return function(){
     var extent = brush.extent(),

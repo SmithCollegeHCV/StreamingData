@@ -39,6 +39,7 @@ init = function(){
 		component.createCopyViewer(className);
 		component.addSubmitButton(className);
     	component.addGraph(className, path1, path2, path3,duration);
+    	component.setupWarning(className);
 	};
 
 	general.countdown( "countdown", 5, 0);

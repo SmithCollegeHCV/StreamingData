@@ -75,10 +75,14 @@ module.exports = {
 					d3.selectAll("#lineCopy").remove();
 					if (!d3.select("div#catagoryButtonContainer").empty()) {
 						onButtons = d3.selectAll("button.catagoryButtons[value='on']");
-						onButtons.each(function() {
-							buttonArray.push(d3.select(this).attr("name"));
-							d3.select(this).attr("value", "off");
-						})
+						if(onButtons.empty() && brush.empty()){
+							general.launchWarning()
+						}else{
+							onButtons.each(function() {
+								buttonArray.push(d3.select(this).attr("name"));
+								d3.select(this).attr("value", "off");
+							})
+						}
 					}
 					general.feedBack(buttonArray, "button");
 					d3.select(".brush").call(brush.clear());
@@ -290,7 +294,22 @@ module.exports = {
 			return 0
 		}
 	},
+	launchWarning:function(){
+		var warning = d3.select("div#warning");
+		console.log("warning launched");
 
+		warning.attr('display', 'inline')
+		.style("opacity", 0.0)
+		.transition()
+		.duration(1000)
+		.style("opacity", 1.0)
+		// .each("end", function() {
+		// 	warning.style("opacity", 1.0)
+		// 	.transition()
+		// 	.duration(speed)
+		// 	.style("opacity", 0.0)
+		// };
+	},
 	/*Appends the copy of the active graph to the analysis graph for the user
 	 *@memberof generalModule
 	 *@fuction addCopy 
