@@ -58,7 +58,3 @@ body{
   background-color: #3e8e41;
   transform: translateY(4px);
 }
-
-div#warning{
-  display:none;
-}

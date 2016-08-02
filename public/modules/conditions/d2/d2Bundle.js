@@ -299,17 +299,18 @@ module.exports = {
 		var warning = d3.select("div#warning");
 		console.log("warning launched");
 
-		warning.attr('display', 'inline')
+		warning.style('display', 'inline')
 		.style("opacity", 0.0)
 		.transition()
 		.duration(1000)
 		.style("opacity", 1.0)
-		// .each("end", function() {
-		// 	warning.style("opacity", 1.0)
-		// 	.transition()
-		// 	.duration(speed)
-		// 	.style("opacity", 0.0)
-		// };
+		.each("end",function(){
+			warning.style("opacity", 1.0)
+			.transition()
+			.duration(800)
+			.style("opacity", 0.0)
+		});
+
 	},
 	/*Appends the copy of the active graph to the analysis graph for the user
 	 *@memberof generalModule
@@ -730,12 +731,13 @@ setupWarning:function(className){
 	var warning = d3.select("#"+className).append("div").attr("id", "warning");
 
 	if(/d3.*/.test(className)){
-		warning.text("Please select section of graph and catagorize anomaly before submitting")
+		warning.text("Please select section of graph and catagorize anomaly before submitting");
 
 	}else{
-		warning.text("Please select section of graph before submitting")
+		warning.text("Please select section of graph before submitting");
 	}
 
+	warning.style("display", "none");
 },
 boundedBrushmove:function ( min, max) {
   return function(){

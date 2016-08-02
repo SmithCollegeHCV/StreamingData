@@ -298,17 +298,18 @@ module.exports = {
 		var warning = d3.select("div#warning");
 		console.log("warning launched");
 
-		warning.attr('display', 'inline')
+		warning.style('display', 'inline')
 		.style("opacity", 0.0)
 		.transition()
 		.duration(1000)
 		.style("opacity", 1.0)
-		// .each("end", function() {
-		// 	warning.style("opacity", 1.0)
-		// 	.transition()
-		// 	.duration(speed)
-		// 	.style("opacity", 0.0)
-		// };
+		.each("end",function(){
+			warning.style("opacity", 1.0)
+			.transition()
+			.duration(800)
+			.style("opacity", 0.0)
+		});
+
 	},
 	/*Appends the copy of the active graph to the analysis graph for the user
 	 *@memberof generalModule
