@@ -72,6 +72,7 @@ svg {
 
 
 #catagoryButtonContainer{
+  top: 520px;
   display:inline;
   position: absolute;
   left:700px;
