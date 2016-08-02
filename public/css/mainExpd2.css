@@ -100,4 +100,5 @@ div#warning{
   color:red;
   top: 250px;
   left:175px;
+  background:rgba(255,255,255,0.5);
 }
