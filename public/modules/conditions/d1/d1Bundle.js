@@ -57,8 +57,10 @@ module.exports = {
 	addSubmitFunctionality: function(){
 		submitButton = d3.select(".submitButton")
 		.on("mousedown", function() {
-			buttonArray.push("submit")
+
+			buttonArray.push("submit");
 			d3.selectAll("#lineCopy").remove();
+
 			if (!d3.select("div#catagoryButtonContainer").empty()) {
 				onButtons = d3.selectAll("button.catagoryButtons[value='on']");
 				if(onButtons.empty() || brush.empty()){
@@ -73,9 +75,11 @@ module.exports = {
 					d3.select(".brush").call(brush.clear());
 
 				}
-			}else if (!brush.empty()) {
+			}else if (!brush.empty() && (!d3.selectAll("#lineCopy").empty)) {
 				general.feedBack(buttonArray, "button");
 				d3.select(".brush").call(brush.clear());
+			}else{
+				general.launchWarning();
 			}
 			
 
@@ -735,9 +739,11 @@ setupWarning:function(className){
 	var warning = d3.select("#"+className).append("div").attr("id", "warning");
 
 	if(/d3.*/.test(className)){
+	
 		warning.text("Please select section of graph and catagorize anomaly before submitting");
 
 	}else{
+		
 		warning.text("Please select section of graph before submitting");
 	}
 
