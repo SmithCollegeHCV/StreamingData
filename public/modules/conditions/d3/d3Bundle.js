@@ -73,7 +73,7 @@ module.exports = {
 			submitButton = d3.select(".submitButton")
 				.on("mousedown", function() {
 					buttonArray.push("submit")
-					
+					d3.selectAll("#lineCopy").remove();
 					if (!d3.select("div#catagoryButtonContainer").empty()) {
 						onButtons = d3.selectAll("button.catagoryButtons[value='on']");
 						onButtons.each(function() {
