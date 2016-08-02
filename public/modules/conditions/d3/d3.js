@@ -44,7 +44,7 @@ init = function(){
     	general.addSubmitFunctionality();
 	};
 
-	general.countdown( "countdown", 0, 30 );
+	general.countdown( "countdown", 5, 0 );
 	
 }();
 
