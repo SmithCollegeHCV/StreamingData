@@ -58,3 +58,11 @@ body{
   background-color: #3e8e41;
   transform: translateY(4px);
 }
+
+div#warning{
+  position:absolute;
+  font-size: 25px;
+  color:red;
+  top: 250px;
+  left:175px;
+}
