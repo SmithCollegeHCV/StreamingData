@@ -53,36 +53,37 @@ module.exports = {
 			.attr("rx", 20)
 			.attr("ry", 20);
 	},
-	addSubmitFunctionality: function(){
+	addSubmitFunctionality: function() {
 		submitButton = d3.select(".submitButton")
-		.on("mousedown", function() {
+			.on("mousedown", function() {
+				buttonArray.push("submit");
 
-			buttonArray.push("submit");
-			d3.selectAll("#lineCopy").remove();
+				if (!d3.select("div#catagoryButtonContainer").empty()) {
+					onButtons = d3.selectAll("button.catagoryButtons[value='on']");
+					if (onButtons.empty() || brush.empty()) {
+						general.launchWarning()
+					} else {
+						onButtons.each(function() {
+							buttonArray.push(d3.select(this).attr("name"));
+							d3.select(this).attr("value", "off");
+						})
 
-			if (!d3.select("div#catagoryButtonContainer").empty()) {
-				onButtons = d3.selectAll("button.catagoryButtons[value='on']");
-				if(onButtons.empty() || brush.empty()){
-					general.launchWarning()
-				}else{
-					onButtons.each(function() {
-						buttonArray.push(d3.select(this).attr("name"));
-						d3.select(this).attr("value", "off");
-					})
+						general.feedBack(buttonArray, "button");
+						d3.select(".brush").call(brush.clear());
 
-					general.feedBack(buttonArray, "button");
-					d3.select(".brush").call(brush.clear());
-
+					}
+				}else {
+					if (brush.empty() || d3.selectAll("#lineCopy").empty()) {
+							general.launchWarning();
+					} else {
+						general.feedBack(buttonArray, "button");
+						d3.select(".brush").call(brush.clear());
+					
+					}
 				}
-			}else if (!brush.empty() && (!d3.selectAll("#lineCopy").empty)) {
-				general.feedBack(buttonArray, "button");
-				d3.select(".brush").call(brush.clear());
-			}else{
-				general.launchWarning();
-			}
-			
-
-		})
+				d3.selectAll("#lineCopy").remove();
+				buttonArray = [];
+			})
 	},
 	/** Sends interaction information to backend on button pressed 
 	 *@memberof generalModule
@@ -99,7 +100,7 @@ module.exports = {
 			linesOnDisplay.remove();
 			general.addCopy();
 			component.addBrush();
-		
+
 			if (!d3.select("div#catagoryButtonContainer").empty()) {
 				catagoryButton = d3.selectAll(".catagoryButtons")
 					.on("mousedown", function() {
@@ -302,21 +303,21 @@ module.exports = {
 			return 0
 		}
 	},
-	launchWarning:function(){
+	launchWarning: function() {
 		var warning = d3.select("div#warning");
 		console.log("warning launched");
 
 		warning.style('display', 'inline')
-		.style("opacity", 0.0)
-		.transition()
-		.duration(1200)
-		.style("opacity", 1.0)
-		.each("end",function(){
-			warning.style("opacity", 1.0)
-			.transition()
-			.duration(800)
 			.style("opacity", 0.0)
-		});
+			.transition()
+			.duration(1200)
+			.style("opacity", 1.0)
+			.each("end", function() {
+				warning.style("opacity", 1.0)
+					.transition()
+					.duration(800)
+					.style("opacity", 0.0)
+			});
 
 	},
 	/*Appends the copy of the active graph to the analysis graph for the user
