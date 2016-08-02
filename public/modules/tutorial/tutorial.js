@@ -47,7 +47,7 @@ var introPages = 6;
 var exitPages = 1;
 var tutorial1Pages = 0;
 var tutorial2Pages = 3;
-var tutorial3Pages = 3;
+var tutorial3Pages = 4;
 var tutorialPages = 0;
 
 var pageId = null;
@@ -604,7 +604,6 @@ function tutorial2(i){
 }
 
 
-
 function tutorial3(i){
 	console.log("tutorial3", i)
 	switch(i){
@@ -614,26 +613,16 @@ function tutorial3(i){
 		.attr("width", 1000);
 
 		svg.append("image")
-		.attr("xlink:href", "modules/tutorial/tutorial3.png")
+		.attr("xlink:href", "modules/tutorial/d3-tutorial-1.png")
 		.attr("width", 720)
 		.attr("height", 400)
 		.attr("x",200)
 		.attr("y",0);
 
 		svg.append("text")
-		.text("You must focus on a section of the chart using the Enter Button ")
+		.text("Streaming data will appear on the left side of the screen. ")
 		.attr("x",550)
 		.attr("y",400);
-
-		svg.append("text")
-		.text("and it will disply on the left pane")
-		.attr("x",550)
-		.attr("y",440);
-
-		svg.append("text")
-		.text("After choosing a section, you should highlight the anomoly with your mouse")
-		.attr("x",550)
-		.attr("y",480);
 		break;
 		case 1: 
 		d3.select("svg#container")
@@ -641,52 +630,70 @@ function tutorial3(i){
 		.attr("width", 1000);
 
 		svg.append("image")
-		.attr("xlink:href", "modules/tutorial/tutorial3.png")
+		.attr("xlink:href", "modules/tutorial/d3-tutorial-2.png")
 		.attr("width", 720)
 		.attr("height", 400)
 		.attr("x",200)
 		.attr("y",0);
 
 		svg.append("text")
-		.text("You then must choose the anomaly type: ")
+		.text("Whenever you see an ANOMALY (shrinking, stretching or odd-looking value),")
 		.attr("x",550)
 		.attr("y",400);
 
 		svg.append("text")
-		.text("a compressed, spiked, or stretched anomaly")
+		.text("press the ENTER key to capture a screenshot.")
 		.attr("x",550)
 		.attr("y",440);
+
+		svg.append("text")
+		.text("This will appear on the right")
+		.attr("x",550)
+		.attr("y",480);
 		break;
 		case 2:
-
-		var mainContainer =	 d3.select('div#tutorial3')
-		.append("div")
-		.attr('id', "catagoryButtonContainer");
-
-		var stretchButton = mainContainer
-		.append('button')
-		.text('Stretched Anomaly')
-		.attr("class", "catagoryButtons")
-		.attr('name', 'stretch')
-		.on("click", clean);
-
-		var compressedButton = mainContainer
-		.append('button')
-		.text('Compressed Anomaly')
-		.attr('class', 'catagoryButtons')
-		.attr('name', 'compress')
-		.on("click", clean);
-
-		var spikeButton  = mainContainer
-		.append('button')
-		.text('Spike Anomaly')
-		.attr('class', 'catagoryButtons')
-		.attr('name', 'spike')
-		.on("click", clean);
-		createTwoPaneExample();
-
 		d3.select("svg#container")
-		.attr("height", 425);
+		.attr("height",450)
+		.attr("width", 1000);
+
+
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/d3-tutorial-3.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+
+		svg.append("text")
+		.text("Use your mouse to highlight the part of the screenshot where the ANOMALY appears,")
+		.attr("x",550)
+		.attr("y",400);
+
 		break;
+		case 3: 
+		d3.select("svg#container")
+		.attr("height",450)
+		.attr("width", 1000);
+
+
+		svg.append("image")
+		.attr("xlink:href", "modules/tutorial/d3-tutorial-4.png")
+		.attr("width", 720)
+		.attr("height", 400)
+		.attr("x",200)
+		.attr("y",0);
+
+
+		svg.append("text")
+		.text("Select the type of anomaly")
+		.attr("x",550)
+		.attr("y",400);
+
+		svg.append("text")
+		.text(" and then click the \"Submit\" button.")
+		.attr("x",550)
+		.attr("y",440);
+
 	}
 }
