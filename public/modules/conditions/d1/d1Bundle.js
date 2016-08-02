@@ -73,7 +73,7 @@ module.exports = {
 			submitButton = d3.select(".submitButton")
 				.on("mousedown", function() {
 					buttonArray.push("submit")
-					
+					d3.selectAll("#lineCopy").remove();
 					if (!d3.select("div#catagoryButtonContainer").empty()) {
 						onButtons = d3.selectAll("button.catagoryButtons[value='on']");
 						onButtons.each(function() {
@@ -778,7 +778,7 @@ init = function(){
     	component.addGraph(className, path1, path2, path3,duration);
 	};
 
-	general.countdown( "countdown", 0, 30 );
+	general.countdown( "countdown", 5, 0 );
 
 	
 }();
