@@ -70,29 +70,17 @@ module.exports = {
 	*@function createGraphViewer
 	*/ 
 	createGraphViewer:function(className){
-		brush = d3.svg.brush()
-		.x(x)
-		.on("brushend",component.brushed);
-
 		general.test();
 
-		d3.select("#"+className)
-		.append('div')
-		.attr('id', 'test-buttons')
-		.append("button")
-		.text('Anomaly Detected')
-		.attr('id', 'button1')
-		.attr('name','researchButton')
-		.on('click',function(){
-			general.pressed(d3.select(this).attr('id') , "button");
-			console.log(' research button pressed'+ d3.select(this).attr('id'));
-		});
+		if(className.substring(0,2)=="d1"){
+			component.addAnomalyButton(className);
+		}
 
 		var svgContainer = d3.select("#"+className).append("svg")
 		.attr("width", 1500)
 		.attr("height", 500);
 
-		var xAxis=d3.svg.axis().scale(x).orient("bottom");
+		var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 
 		svg1 = svgContainer.append("g")
 		.attr("class","svg1")
@@ -138,7 +126,24 @@ module.exports = {
 		.attr("rx",20)
 		.attr("ry",20);
 	},
-
+	/** Adds the button for condition one based on className
+	*@memberof ComponentsModule
+	*@function addAnomalyButton
+	*@param {string} className
+	*/
+	addAnomalyButton:function(className){
+		d3.select("#"+className)
+		.append('div')
+		.attr('id', 'test-buttons')
+		.append("button")
+		.text('Anomaly Detected')
+		.attr('id', 'button1')
+		.attr('name','researchButton')
+		.on('click',function(){
+			general.pressed(d3.select(this).attr('id') , "button");
+			// console.log(' research button pressed'+ d3.select(this).attr('id'));
+		});
+	},
 	/** Imports data files and adds lines to the graph container 
 	*@memberof ComponentsModule
 	*@function addGraph
@@ -205,7 +210,7 @@ module.exports = {
 				disData1.push(data1.slice(0,1)[0]);
 				data1.splice(0,1);
 
-				if(d3.select('#countdown').html() == "countdown's over!"){
+				if((!d3.select('#countdown').empty()) &amp;&amp; d3.select('#countdown').html() == "countdown's over!"){
 					data1=[];
 				}
 
@@ -255,12 +260,17 @@ module.exports = {
 *@param {string} className indicates what id to attach to 
 */
 createCopyViewer:function(className){
-	d3.select("#button1").remove();
-	var xAxis=d3.svg.axis().scale(x).orient("bottom");
+
+	brush = d3.svg.brush()
+		.x(x)
+		.on("brushend",component.brushed)
+		.on("brush", component.boundedBrushmove(1, 25));
+
+	var xAxis=d3.svg.axis().tickFormat("").scale(x).orient("bottom");
 	
 	var svgContainer = d3.select("svg")
 	
-	svg2	= svgContainer.append("g")
+	svg2 = svgContainer.append("g")
 	.attr("class","svg2")
 	.attr("transform", "translate(" +650+ "," + 20 + ")");
 	
@@ -304,20 +314,58 @@ createCopyViewer:function(className){
 	.attr("rx",20)
 	.attr("ry",20);
 	
+
+},
+/** Adds a submit button for conditions d2 and d3 
+*@memberof ComponentsModule
+*@function addSubmitButton
+*@param {string} className indicates what id to attach to 
+*/
+addSubmitButton : function(className){
 	var submitButton = d3.select("#"+className)
 	.append("button")
 	.text('submit')
 	.attr('class', 'submitButton')
 	.attr('name','researchButton');
+}, 
+/** Adds anomaly catagory buttons for condition d3 
+*@memberof ComponentsModule
+*@function addCatagoryButtons
+*@param {string} className indicates what id to attach to 
+*/
+addCatagoryButtons: function(className){
 
+	var mainContainer =	 d3.select('#'+className)
+	.append("div")
+	.attr('id', "catagoryButtonContainer");
+
+	var stretchButton = mainContainer
+		.append('button')
+		.text('Stretched Anomaly')
+		.attr("class", "catagoryButtons")
+		.attr('name', 'stretch')
+		.attr('value', 'off');
+
+	var compressedButton = mainContainer
+		.append('button')
+		.text('Compressed Anomaly')
+		.attr('class', 'catagoryButtons')
+		.attr('name', 'compress')
+		.attr('value', 'off');
+
+	var spikeButton  = mainContainer
+		.append('button')
+		.text('Spike Anomaly')
+		.attr('class', 'catagoryButtons')
+		.attr('name', 'spike')
+		.attr('value', 'off');
 },
-
 /** creates brush component for user graph analysis
 *@memberof ComponentsModule
 *@function addBrush
 */
 addBrush:function(){
-	console.log("add Brush called")
+	// console.log("add Brush called")
 	svg2.append("g")
 	.attr("class","brush")
 	.call(brush)
@@ -333,11 +381,51 @@ brushed:function(){
 	var extent = brush.extent();
 	var min = Math.round(extent[0]);
 	var max = Math.round(extent[1]);
-	console.log("min"+ min+ "max" + max);
+	// console.log("min"+ min+ "max" + max);
 	if (d3.select(".copy3")[0][0] != null){
 		selectedPoints = lines.noise1.slice(min,max).concat(lines.noise2.slice(min,max)).concat(lines.noise3.slice(min,max));
-		console.log('in create components: selected Points = ',selectedPoints);
+		// console.log('in create components: selected Points = ',selectedPoints);
 	}
+},
+/** Creates warning text depeding on condition. Only applies to d2 or d3 
+*@memberof ComponentsModule
+*@function setupWarning
+*@param {string} className indicates what id to attach to 
+*/
+setupWarning:function(className){
+	var warning = d3.select("#"+className).append("div").attr("id", "warning");
+
+	if(/d3.*/.test(className)){
+	
+		warning.text("Please select section of graph and catagorize anomaly before submitting");
+
+	}else{
+		
+		warning.text("Please select section of graph before submitting");
+	}
+
+	warning.style("display", "none");
+},
+/** Limits the size of selected brush movement
+*@memberof ComponentsModule
+*@function boundedBrushmove
+*@param {string} min the minimum brush size 
+*@param {string} max  the max brush size
+*/
+boundedBrushmove:function ( min, max) {
+  return function(){
+    var extent = brush.extent(),
+      diff = extent[1] - extent[0];
+    
+    if(min &amp;&amp; (diff &lt; min)) {
+      extent[1] = extent[0] + min;
+    }else if(max &amp;&amp; (diff > max)){
+      extent[1] = extent[0] + max;
+    }else{
+      return;
+    }
+    brush.extent(extent)(d3.select(this));
+  }
 },
 
 /** a getter method for the selected points from brush for the General module
@@ -364,7 +452,7 @@ getSelected: function(){
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Jul 18 2016 15:43:12 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 03 2016 12:25:59 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
