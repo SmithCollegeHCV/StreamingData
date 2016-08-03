@@ -288,7 +288,11 @@ createCopyViewer:function(className){
 	
 
 },
-
+/** Adds a submit button for conditions d2 and d3 
+*@memberof ComponentsModule
+*@function addSubmitButton
+*@param {string} className indicates what id to attach to 
+*/
 addSubmitButton : function(className){
 	var submitButton = d3.select("#"+className)
 	.append("button")
@@ -296,7 +300,11 @@ addSubmitButton : function(className){
 	.attr('class', 'submitButton')
 	.attr('name','researchButton');
 }, 
-
+/** Adds anomaly catagory buttons for condition d3 
+*@memberof ComponentsModule
+*@function addCatagoryButtons
+*@param {string} className indicates what id to attach to 
+*/
 addCatagoryButtons: function(className){
 
 	var mainContainer =	 d3.select('#'+className)
@@ -351,7 +359,11 @@ brushed:function(){
 		// console.log('in create components: selected Points = ',selectedPoints);
 	}
 },
-
+/** Creates warning text depeding on condition. Only applies to d2 or d3 
+*@memberof ComponentsModule
+*@function setupWarning
+*@param {string} className indicates what id to attach to 
+*/
 setupWarning:function(className){
 	var warning = d3.select("#"+className).append("div").attr("id", "warning");
 
@@ -366,6 +378,12 @@ setupWarning:function(className){
 
 	warning.style("display", "none");
 },
+/** Limits the size of selected brush movement
+*@memberof ComponentsModule
+*@function boundedBrushmove
+*@param {string} min the minimum brush size 
+*@param {string} max  the max brush size
+*/
 boundedBrushmove:function ( min, max) {
   return function(){
     var extent = brush.extent(),

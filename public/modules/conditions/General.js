@@ -303,6 +303,10 @@ module.exports = {
 			return 0
 		}
 	},
+	/* sets off warning when user is incorrect
+	 *@memberof generalModule
+	 *@function launchWarning 
+	 */
 	launchWarning: function() {
 		var warning = d3.select("div#warning");
 		console.log("warning launched");
