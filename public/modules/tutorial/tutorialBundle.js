@@ -776,6 +776,18 @@ getSelected: function(){
 }
 }
 },{}],3:[function(require,module,exports){
+/**
+
+*@nameSpace tutorialModule
+*/
+
+/**
+*These functions set and run the tutorial for the experiments
+*@module tutorial
+*/
+
+
+
 general = require('../conditions/general')
 component = require('../conditions/conditionComponents')
 
@@ -836,7 +848,10 @@ var pageId = null;
 var step = -1;
 
 
-
+/** Initializes tutorial by binding the mouse and hiding the next button 
+*@memberof tutorialModule
+*@function initTutorial
+*/ 
 initTutorial = function() {
 	setArrowDirection(step);
 	setPageID();
@@ -857,6 +872,10 @@ initTutorial = function() {
 
 }()
 
+/** Sets the number of tutorial pages should exist 
+*@memberof tutorialModule
+*@function setPageID
+*/ 
 function setPageID() {
 	this.pageId = d3.select("#module").selectAll("div")[0][0].getAttribute('id')
 	console.log(this.pageId);
@@ -873,6 +892,10 @@ function setPageID() {
 
 }
 
+/** Set the direction for the arrow based on the page number 
+*@memberof tutorialModule
+*@function setArrowDirection
+*/ 
 function setArrowDirection(step) {
 	if (step <= 0) {
 		d3.select("#back-button").style("visibility", "hidden");
@@ -886,6 +909,10 @@ function setArrowDirection(step) {
 	}
 }
 
+/** This function removes all content before updloading the next tutorial page 
+*@memberof tutorialModule
+*@function removePrevious
+*/ 
 function removePrevious() {
 	svg.selectAll(".line")
 		.remove();
@@ -907,7 +934,10 @@ function removePrevious() {
 		.attr("width", 750);
 }
 
-
+/** Makes sure that the step number doesnt exeed the limits 
+*@memberof tutorialModule
+*@function keepInBounds
+*/ 
 function keepInBounds(step) {
 	if (step < 0) {
 		step = 0;
@@ -919,6 +949,10 @@ function keepInBounds(step) {
 	return step
 }
 
+/** Makes sure that the step number doesnt exeed the limits 
+*@memberof tutorialModule
+*@function checkKeyPressed
+*/ 
 function checkKeyPressed(key) {
 	if (key == "right") {
 		step += 1;
@@ -960,12 +994,18 @@ function checkKeyPressed(key) {
 		console.log("this is whate")
 	}
 }
-
+/** Once the tutorial is over ends timer and releases next button
+*@memberof tutorialModule
+*@function validate
+*/ 
 function validate() {
 	experimentr.endTimer('demo');
 	experimentr.release();
 }
-
+/** Creates sample of 
+*@memberof tutorialModule
+*@function addCopy
+*/ 
 function addCopy() {
 	if (!d3.select("g.svg2").empty()) {
 		var linesOnDisplay = d3.selectAll("#lineCopy");
@@ -1027,7 +1067,10 @@ function addCopy() {
 			.attr("d", copy3);
 	}
 }
-
+/** Runs the introduction to all tutorials.
+*@memberof tutorialModule
+*@function introduction
+*/ 
 function introduction(i) {
 	console.log(i)
 	switch (i) {
@@ -1275,7 +1318,10 @@ function introduction(i) {
 			}
 	}
 }
-
+/** Has the content for the final pages of tutorial
+*@memberof tutorialModule
+*@function exit
+*/ 
 function exit(i) {
 
 	svg.append("text")
@@ -1301,7 +1347,10 @@ function exit(i) {
 	experimentr.release();
 }
 
-
+/** Has tutorial 1 content. 
+*@memberof tutorialModule
+*@function tutorial1
+*/ 
 function tutorial1(i) {
 	svg.append("text")
 		.text("Whenever you see an ANOMALY")
@@ -1343,7 +1392,10 @@ function tutorial1(i) {
 		.attr("x", 360)
 		.attr("y", 320);
 }
-
+/** Has tutorial 2 content. 
+*@memberof tutorialModule
+*@function tutorial2
+*/ 
 function tutorial2(i) {
 
 	switch (i) {
@@ -1419,7 +1471,10 @@ function tutorial2(i) {
 	}
 }
 
-
+/** Has tutorial 3 content. 
+*@memberof tutorialModule
+*@function tutorial3
+*/ 
 function tutorial3(i) {
 	console.log("tutorial3", i)
 	switch (i) {
