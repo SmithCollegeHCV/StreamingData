@@ -8,8 +8,6 @@
 *@module tutorial
 */
 
-
-
 general = require('../conditions/general')
 component = require('../conditions/conditionComponents')
 
