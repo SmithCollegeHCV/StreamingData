@@ -22,6 +22,33 @@ All of the experiment modules are located in public/modules/conditions/ and are 
 To add or remove pages to the experimentr module go to the index.html page within public/ and add a module. They are listed by folder name. 
 
 
+Pulling down results 
+---------------------
+
+In order to pull down results you should ssh into the the server by using this command 
+
+ssh [enter Ip address here]
+
+You will probably be prompted for a password or a pem. You go into root/StreamingData/analysis  then run the following command 
+
+sh pull.sh 
+
+These results will be saved in the results file. Everytime you pull it will overwrite the old file with the newest data. If you do not wipe clean the database it will contain the results of every experiment run. 
+
+From there you must open a new terminal window and navigate to a folder where you will keep all your results from that folder run the following command 
+
+sftp [enter ip address here]
+
+you will be prompted for a password or a pem. Once you have accessed the server navigate to the following folder:
+root/StreamingData/analysis/results 
+
+to pull down the results file run the following command 
+
+get results.json 
+
+you then can exit and the file will be in the appropriate folder. 
+
+
  Redis-cli
 ----------
 We rely on redis to save all data from the experiments.  You can download [Redis here](http://redis.io/download). The configuration file is known as redis.conf and the appendonly.aof also is a redis file. 
