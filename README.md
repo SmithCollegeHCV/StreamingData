@@ -13,7 +13,9 @@ You must also download Redis.
 
 One you have downloaded all packages and redis you can run: 
 
-'nodemon app.js '
+redis-server redis.conf
+
+nodemon app.js 
 
 and that should start the app at 'localhost:4000'. 
 
