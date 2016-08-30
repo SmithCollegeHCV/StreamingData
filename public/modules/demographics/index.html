@@ -57,22 +57,22 @@ Thank you! The experiment is almost complete. Please fill out the following demo
 
   d3.selectAll('input')
   .filter(function(d) { return this.name === 'age' ? this : null; })
-  .on('change', function() { data.age = this.value; validate(); });
+  .on('click', function() { data.age = this.value; validate(); });
   
   d3.selectAll('input')
   .filter(function(d) { return this.name === 'sex' ? this : null; })
-  .on('change', function() { data.sex = this.value; validate(); });
+  .on('click', function() { data.sex = this.value; validate(); });
   
   d3.selectAll('input')
   .filter(function(d) { return this.name === 'degree' ? this : null; })
-  .on('change', function() { data.degree = this.value; validate(); });
+  .on('click', function() { data.degree = this.value; validate(); });
   
   d3.selectAll('input')
   .filter(function(d) { return this.name === 'monitor' ? this : null; })
-  .on('change', function() { data.monitor = this.value; validate(); });
+  .on('click', function() { data.monitor = this.value; validate(); });
   
   function validate() {
-	  if(data.age && data.sex && data.degree && data.monitor) {
+	  if(data.age != null && data.sex  != null && data.degree  != null && data.monitor != null ) {
 	    experimentr.merge(data);
       experimentr.endTimer('demographics');
 	    experimentr.release();
