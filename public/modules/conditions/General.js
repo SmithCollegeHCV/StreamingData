@@ -175,6 +175,7 @@ module.exports = {
 				Mousetrap.reset();
 				// document.onmousemove = experimentr.stopMouseMovementRec;
 				experimentr.showNext();
+				experimentr.release();
 				general.pressed('next-button', "button");
 
 				if (!d3.select(".submitButton").empty()) {
